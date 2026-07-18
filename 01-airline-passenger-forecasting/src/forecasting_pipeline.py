@@ -1,20 +1,133 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
-
-os.environ.setdefault("KERAS_BACKEND", "jax")
+from typing import Any
 
 import joblib
-import keras
 import numpy as np
 import pandas as pd
 
 from .data_preprocessing import prepare_monthly_series
-from .feature_engineering import cyclical_month_features, log_passenger_levels, seasonal_log_difference
+from .feature_engineering import cyclical_month_features, log_passenger_levels
 from .model_evaluation import calculate_metrics
 from .sequence_generation import build_sequence_dataset
+
+
+class NumpyLSTMInferenceModel:
+    """Backend-free inference implementation for the packaged Keras LSTM.
+
+    The saved NPZ file contains the trained weights from the original Keras model.
+    This class reproduces the Keras LSTM forward pass with NumPy, so the deployed
+    Streamlit app does not depend on a JAX or TensorFlow runtime.
+    """
+
+    def __init__(
+        self,
+        lstm_kernel: np.ndarray,
+        lstm_recurrent_kernel: np.ndarray,
+        lstm_bias: np.ndarray,
+        dense_kernel: np.ndarray,
+        dense_bias: np.ndarray,
+        output_kernel: np.ndarray,
+        output_bias: np.ndarray,
+    ) -> None:
+        self.lstm_kernel = np.asarray(lstm_kernel, dtype=np.float32)
+        self.lstm_recurrent_kernel = np.asarray(lstm_recurrent_kernel, dtype=np.float32)
+        self.lstm_bias = np.asarray(lstm_bias, dtype=np.float32)
+        self.dense_kernel = np.asarray(dense_kernel, dtype=np.float32)
+        self.dense_bias = np.asarray(dense_bias, dtype=np.float32)
+        self.output_kernel = np.asarray(output_kernel, dtype=np.float32)
+        self.output_bias = np.asarray(output_bias, dtype=np.float32)
+
+        if self.lstm_kernel.ndim != 2 or self.lstm_kernel.shape[1] % 4 != 0:
+            raise ValueError("Invalid LSTM kernel stored in the NumPy model artifact.")
+        self.units = self.lstm_kernel.shape[1] // 4
+
+    @classmethod
+    def load(cls, path: str | Path) -> "NumpyLSTMInferenceModel":
+        path = Path(path)
+        if not path.exists():
+            raise FileNotFoundError(f"NumPy LSTM artifact was not found: {path}")
+
+        with np.load(path, allow_pickle=False) as weights:
+            required = {
+                "lstm_kernel",
+                "lstm_recurrent_kernel",
+                "lstm_bias",
+                "dense_kernel",
+                "dense_bias",
+                "output_kernel",
+                "output_bias",
+            }
+            missing = sorted(required.difference(weights.files))
+            if missing:
+                raise ValueError(
+                    "The NumPy LSTM artifact is incomplete. Missing arrays: "
+                    + ", ".join(missing)
+                )
+            return cls(**{name: weights[name] for name in required})
+
+    @staticmethod
+    def _sigmoid(values: np.ndarray) -> np.ndarray:
+        values = np.clip(values, -60.0, 60.0)
+        return 1.0 / (1.0 + np.exp(-values))
+
+    def predict(self, inputs: np.ndarray, verbose: int = 0, **_: Any) -> np.ndarray:
+        del verbose
+        x = np.asarray(inputs, dtype=np.float32)
+        if x.ndim != 3:
+            raise ValueError(
+                "LSTM inference expects a 3D array shaped "
+                "(batch, timesteps, features)."
+            )
+        if x.shape[-1] != self.lstm_kernel.shape[0]:
+            raise ValueError(
+                f"Expected {self.lstm_kernel.shape[0]} input features, "
+                f"but received {x.shape[-1]}."
+            )
+
+        batch_size = x.shape[0]
+        hidden = np.zeros((batch_size, self.units), dtype=np.float32)
+        cell = np.zeros_like(hidden)
+
+        # Keras LSTM gate order is input, forget, cell candidate, output.
+        for timestep in range(x.shape[1]):
+            gates = (
+                x[:, timestep, :] @ self.lstm_kernel
+                + hidden @ self.lstm_recurrent_kernel
+                + self.lstm_bias
+            )
+            input_gate, forget_gate, candidate, output_gate = np.split(
+                gates, 4, axis=-1
+            )
+            input_gate = self._sigmoid(input_gate)
+            forget_gate = self._sigmoid(forget_gate)
+            candidate = np.tanh(candidate)
+            output_gate = self._sigmoid(output_gate)
+
+            cell = forget_gate * cell + input_gate * candidate
+            hidden = output_gate * np.tanh(cell)
+
+        dense = np.maximum(hidden @ self.dense_kernel + self.dense_bias, 0.0)
+        output = dense @ self.output_kernel + self.output_bias
+        return np.asarray(output, dtype=np.float32)
+
+
+def _load_keras_model(model_path: Path):
+    """Fallback loader for local retraining environments with Keras installed."""
+    try:
+        import os
+
+        os.environ.setdefault("KERAS_BACKEND", "jax")
+        import keras
+    except Exception as exc:  # pragma: no cover - deployment uses the NPZ path.
+        raise RuntimeError(
+            "The NumPy inference artifact is missing and Keras could not be loaded. "
+            "Restore models/airline_passenger_lstm_weights.npz or install the "
+            "project training dependencies."
+        ) from exc
+    return keras.saving.load_model(model_path, compile=False)
 
 
 def load_artifacts(
@@ -22,7 +135,14 @@ def load_artifacts(
     scaler_path: str | Path,
     metadata_path: str | Path,
 ):
-    model = keras.saving.load_model(model_path, compile=False)
+    model_path = Path(model_path)
+    numpy_model_path = model_path.with_name("airline_passenger_lstm_weights.npz")
+
+    if numpy_model_path.exists():
+        model = NumpyLSTMInferenceModel.load(numpy_model_path)
+    else:
+        model = _load_keras_model(model_path)
+
     scaler = joblib.load(scaler_path)
     with open(metadata_path, "r", encoding="utf-8") as handle:
         metadata = json.load(handle)

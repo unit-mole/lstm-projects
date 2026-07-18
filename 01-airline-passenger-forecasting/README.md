@@ -62,52 +62,36 @@ The application produces:
 
 ### 1. Application overview
 
-The overview presents the selected dataset, available history, forecast horizon, average forecast,
-trend direction, combined historical-and-forecast chart, and a business interpretation.
+The application provides an interactive interface for exploring historical airline passenger demand
+and generating future forecasts with the deployed LSTM model. Users can select the packaged sample
+dataset or upload a compatible monthly passenger CSV file, choose the forecast horizon, and review
+the key forecast summary.
 
-![Historical airline passenger trend](outputs/passenger_trend.png)
+![Airline Passenger Forecasting application overview](images/01_app_overview.png)
 
-### 2. Data and seasonality analysis
+### 2. Historical trend and seasonality
 
-Users can review the processed monthly passenger history and examine the average passenger-demand
-pattern across calendar months.
+The exploratory section presents the long-term passenger-demand trend and the repeating seasonal
+pattern across calendar months. These visualizations help explain the growth and seasonality learned
+by the forecasting pipeline.
 
-![Average passenger demand by calendar month](outputs/seasonal_pattern.png)
+![Historical passenger trend and seasonality](images/02_historical_trend_and_seasonality.png)
 
-### 3. Model-performance dashboard
+### 3. Future passenger forecast
 
-The model-performance section reports metrics calculated on the final 24 chronologically held-out
-months of the packaged sample dataset.
+Users can select a forecast horizon of 6, 12, 18, or 24 months. The application combines the
+historical observations with recursively generated LSTM forecasts and reports the expected demand
+direction, average forecast, and future monthly passenger counts.
 
-![Actual versus predicted airline passenger demand](outputs/actual_vs_predicted.png)
+![Future airline passenger forecast](images/03_future_passenger_forecast.png)
 
-#### Residual analysis
+### 4. Model-performance dashboard
 
-Residuals help reveal systematic underprediction, overprediction, changing error variance, and
-periods where the model does not fully capture passenger-demand movement.
+The model-performance section reports MAE, RMSE, MAPE, and R² calculated on the final 24
+chronologically held-out months. It also includes actual-versus-predicted results and supporting
+evaluation visualizations for understanding forecast accuracy and model limitations.
 
-![Residual analysis](outputs/residual_plot.png)
-
-#### Baseline comparison
-
-The LSTM is compared with four transparent forecasting baselines to confirm that the neural network
-adds measurable forecasting value.
-
-![LSTM and baseline comparison](outputs/baseline_comparison.png)
-
-#### Training and validation loss
-
-The training curve helps assess convergence and whether validation performance begins to deteriorate
-while training continues.
-
-![Training and validation loss](outputs/training_curve.png)
-
-### 4. Future passenger forecast
-
-Users can select a 6-, 12-, 18-, or 24-month horizon, review the forecast table, visualize future
-monthly demand, and download the results as a CSV file.
-
-![Future airline passenger forecast](outputs/forecast_plot.png)
+![Airline passenger forecasting model performance](images/04_model_performance.png)
 
 ---
 
@@ -333,6 +317,10 @@ lstm-projects/
 │   │   ├── README_data.md
 │   │   └── airline_passengers_sample.csv
 │   ├── images/
+│   │   ├── 01_app_overview.png
+│   │   ├── 02_historical_trend_and_seasonality.png
+│   │   ├── 03_future_passenger_forecast.png
+│   │   └── 04_model_performance.png
 │   ├── models/
 │   │   ├── airline_passenger_lstm.keras
 │   │   ├── seasonal_growth_scaler.pkl

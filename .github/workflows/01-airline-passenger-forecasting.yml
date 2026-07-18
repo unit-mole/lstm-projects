@@ -1,0 +1,47 @@
+name: 01 - Airline Passenger Forecasting CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "01-airline-passenger-forecasting/**"
+      - ".github/workflows/01-airline-passenger-forecasting.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "01-airline-passenger-forecasting/**"
+      - ".github/workflows/01-airline-passenger-forecasting.yml"
+  workflow_dispatch:
+
+jobs:
+  test-airline-project:
+    runs-on: ubuntu-latest
+    env:
+      KERAS_BACKEND: jax
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: 01-airline-passenger-forecasting/requirements-dev.txt
+
+      - name: Install project dependencies
+        working-directory: 01-airline-passenger-forecasting
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Validate project structure
+        working-directory: 01-airline-passenger-forecasting
+        run: python scripts/validate_project.py
+
+      - name: Compile Python files
+        working-directory: 01-airline-passenger-forecasting
+        run: python -m compileall -q app src scripts tests train_model.py
+
+      - name: Run tests
+        working-directory: 01-airline-passenger-forecasting
+        run: python -m pytest -q tests

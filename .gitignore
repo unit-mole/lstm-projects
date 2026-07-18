@@ -1,0 +1,22 @@
+# Python cache and environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Notebook and IDE files
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Secrets and local logs
+**/.streamlit/secrets.toml
+*.log
+logs/
+tmp/

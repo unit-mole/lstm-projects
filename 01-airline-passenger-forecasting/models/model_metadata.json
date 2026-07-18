@@ -1,0 +1,54 @@
+{
+  "project": "Airline Passenger Forecasting using a Seasonally Adjusted LSTM",
+  "model_version": "2.0.0",
+  "backend": "jax",
+  "date_column": "Month",
+  "target_column": "Passengers",
+  "target_unit": "thousands of passengers",
+  "transform": "year-over-year log growth",
+  "feature_names": [
+    "standardized_seasonal_log_growth",
+    "month_sin",
+    "month_cos"
+  ],
+  "lookback": 12,
+  "seasonal_period": 12,
+  "effective_raw_history_months": 24,
+  "scaler": "StandardScaler fitted only on training seasonal-growth values",
+  "data_start": "1949-01-01",
+  "data_end": "1960-12-01",
+  "training_target_end": "1956-12-01",
+  "validation_start": "1957-01-01",
+  "validation_end": "1958-12-01",
+  "test_start": "1959-01-01",
+  "test_end": "1960-12-01",
+  "training_sequence_count": 72,
+  "validation_sequence_count": 24,
+  "test_sequence_count": 24,
+  "preprocessing_notes": [],
+  "configuration": {
+    "lookback": 12,
+    "seasonal_period": 12,
+    "effective_raw_history_months": 24,
+    "n_features": 3,
+    "feature_names": [
+      "standardized_seasonal_log_growth",
+      "month_sin",
+      "month_cos"
+    ],
+    "lstm_units": 16,
+    "dropout": 0.1,
+    "dense_units": 8,
+    "learning_rate": 0.003,
+    "batch_size": 8,
+    "maximum_epochs": 150,
+    "early_stopping_patience": 12,
+    "random_seed": 42
+  },
+  "test_metrics": {
+    "mae": 13.741474151611328,
+    "rmse": 18.699405723563775,
+    "mape": 3.001652710347638,
+    "r2": 0.9372983021884498
+  }
+}

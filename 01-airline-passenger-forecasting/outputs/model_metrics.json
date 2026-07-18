@@ -1,0 +1,53 @@
+{
+  "test_metrics": {
+    "mae": 13.741474151611328,
+    "rmse": 18.699405723563775,
+    "mape": 3.001652710347638,
+    "r2": 0.9372983021884498
+  },
+  "baseline_comparison": [
+    {
+      "Model": "Seasonally adjusted LSTM",
+      "mae": 13.741474151611328,
+      "rmse": 18.699405723563775,
+      "mape": 3.001652710347638,
+      "r2": 0.9372983021884498
+    },
+    {
+      "Model": "Seasonal naive (previous year)",
+      "mae": 47.583333333333336,
+      "rmse": 49.98666488841466,
+      "mape": 10.522728354862307,
+      "r2": 0.5519442918996866
+    },
+    {
+      "Model": "Naive (previous month)",
+      "mae": 44.208333333333336,
+      "rmse": 51.781994940326506,
+      "mape": 9.729930052564972,
+      "r2": 0.5191814136976476
+    },
+    {
+      "Model": "12-month moving average",
+      "mae": 55.388888888888886,
+      "rmse": 74.30806200341726,
+      "mape": 11.345114265994068,
+      "r2": 0.009862381798567132
+    },
+    {
+      "Model": "Linear trend",
+      "mae": 54.93759857937666,
+      "rmse": 74.787758856445,
+      "mape": 11.21507247006756,
+      "r2": -0.0029625785503968327
+    }
+  ],
+  "forecast_summary": {
+    "forecast_horizon_months": 24,
+    "average_forecast": 582.3778482056495,
+    "ending_forecast": 566.0191437618788,
+    "change_percent": 27.502424692941467,
+    "trend_direction": "increasing",
+    "business_interpretation": "Passenger demand is forecast to be increasing across the selected horizon. The seasonal monthly pattern should be considered when planning capacity, schedules, staffing, and revenue targets."
+  }
+}

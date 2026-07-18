@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Generated local files
+logs/
+tmp/
+*.log
+
+# Optional large training artifacts
+models/checkpoints/
+*.ckpt
+*.weights.h5
+
+# Keep the packaged inference artifacts and curated outputs tracked.
+!models/airline_passenger_lstm.keras
+!models/seasonal_growth_scaler.pkl
+!models/model_metadata.json
+!models/best_config.json
+!outputs/*.png
+!outputs/*.json
+!outputs/*.csv
+!outputs/*.txt
+
+# Local packaging
+*.zip
+
+# Docker/local temporary files
+.streamlit/credentials.toml

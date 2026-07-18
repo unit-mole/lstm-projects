@@ -1,0 +1,19 @@
+{
+  "lookback": 12,
+  "seasonal_period": 12,
+  "effective_raw_history_months": 24,
+  "n_features": 3,
+  "feature_names": [
+    "standardized_seasonal_log_growth",
+    "month_sin",
+    "month_cos"
+  ],
+  "lstm_units": 16,
+  "dropout": 0.1,
+  "dense_units": 8,
+  "learning_rate": 0.003,
+  "batch_size": 8,
+  "maximum_epochs": 150,
+  "early_stopping_patience": 12,
+  "random_seed": 42
+}

@@ -1,54 +1,268 @@
 # Airline Passenger Forecasting using LSTM Neural Networks
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-[![Keras](https://img.shields.io/badge/Keras-3-red.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Demo-FF4B4B.svg)](https://YOUR-SUBDOMAIN.streamlit.app)
+[![Keras](https://img.shields.io/badge/Keras-3.13.2-red.svg)](https://keras.io/)
+[![JAX](https://img.shields.io/badge/Backend-JAX-purple.svg)](https://jax.readthedocs.io/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+[![Airline LSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/01-airline-passenger-forecasting.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/01-airline-passenger-forecasting.yml)
 
-A production-style monthly demand forecasting project that uses a **seasonally adjusted LSTM** to predict airline passenger growth, benchmark performance against classical baselines, generate future forecasts, and serve results through an interactive Streamlit application.
+An end-to-end time-series forecasting project that uses a seasonality-aware Long Short-Term Memory
+network to forecast monthly airline passenger demand. The project combines chronological validation,
+training-only scaling, year-over-year growth modeling, cyclical month features, baseline benchmarking,
+recursive multi-step forecasting, saved inference artifacts, automated testing, and an interactive
+Streamlit application.
 
-## Live Demo
+**Status:** Portfolio-ready  
+**Live demo:** [Open the Airline Passenger Forecasting application](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/)  
+**Primary stack:** Python · Keras · JAX · scikit-learn · pandas · Plotly · Streamlit
 
-**Streamlit:** `https://YOUR-SUBDOMAIN.streamlit.app`
-
-Replace this placeholder after deployment.
+---
 
 ## Business Problem
 
-Airlines and travel organizations need forward-looking demand estimates for capacity planning, aircraft scheduling, staffing, pricing, marketing, and revenue planning. This project answers:
+Airlines and travel organizations need forward-looking passenger-demand estimates to support
+capacity planning, aircraft scheduling, workforce allocation, seasonal campaign planning, and
+revenue forecasting. Historical passenger totals alone do not directly show how future demand may
+change or how repeating seasonal patterns may affect upcoming months.
+
+This project answers:
 
 > Given historical monthly airline passenger counts, what will future passenger demand look like?
 
-The application provides forecasted passenger counts, a selectable forecast horizon, trend direction, model error metrics, visual comparisons, a downloadable forecast, and a concise business interpretation.
+The application produces:
 
-## Project Objective
+- **Forecasted monthly passenger counts**
+- **Selectable forecast horizon of 6, 12, 18, or 24 months**
+- **Historical trend and seasonal-demand analysis**
+- **Actual-versus-predicted model evaluation**
+- **Forecast trend direction and business interpretation**
+- **Downloadable forecast results**
 
-Build an end-to-end and deployment-ready LSTM forecasting workflow that:
+---
 
-- validates and standardizes monthly passenger history,
-- preserves chronological order,
-- avoids train/test leakage,
-- models trend and seasonality,
-- compares the neural network against simple baselines,
-- forecasts 6, 12, 18, or 24 future months,
-- saves all artifacts required for inference,
-- exposes the results through Streamlit.
+## Project Highlights
 
-## Key Results
+- End-to-end monthly demand-forecasting workflow from raw CSV data to deployment
+- Seasonality-aware LSTM trained on year-over-year log passenger growth
+- Leakage-safe chronological training, validation, and test periods
+- Scaler fitted exclusively on the training period
+- Month-of-year sine and cosine features for cyclical seasonality
+- Comparison against naive, seasonal-naive, moving-average, and linear-trend baselines
+- Recursive 6-, 12-, 18-, and 24-month forecasting
+- MAE, RMSE, MAPE, R², residual analysis, and forecast visualizations
+- Pretrained model loading without retraining during application startup
+- CSV upload, data validation, forecast generation, and CSV download
+- Modular Python source code, automated tests, GitHub Actions CI, and Streamlit deployment
 
-The final 24 months, January 1959 through December 1960, were held out from model training and early-stopping decisions.
+---
 
-| Metric | Seasonally adjusted LSTM |
+## Application Preview
+
+### 1. Application overview
+
+The overview presents the selected dataset, available history, forecast horizon, average forecast,
+trend direction, combined historical-and-forecast chart, and a business interpretation.
+
+![Historical airline passenger trend](outputs/passenger_trend.png)
+
+### 2. Data and seasonality analysis
+
+Users can review the processed monthly passenger history and examine the average passenger-demand
+pattern across calendar months.
+
+![Average passenger demand by calendar month](outputs/seasonal_pattern.png)
+
+### 3. Model-performance dashboard
+
+The model-performance section reports metrics calculated on the final 24 chronologically held-out
+months of the packaged sample dataset.
+
+![Actual versus predicted airline passenger demand](outputs/actual_vs_predicted.png)
+
+#### Residual analysis
+
+Residuals help reveal systematic underprediction, overprediction, changing error variance, and
+periods where the model does not fully capture passenger-demand movement.
+
+![Residual analysis](outputs/residual_plot.png)
+
+#### Baseline comparison
+
+The LSTM is compared with four transparent forecasting baselines to confirm that the neural network
+adds measurable forecasting value.
+
+![LSTM and baseline comparison](outputs/baseline_comparison.png)
+
+#### Training and validation loss
+
+The training curve helps assess convergence and whether validation performance begins to deteriorate
+while training continues.
+
+![Training and validation loss](outputs/training_curve.png)
+
+### 4. Future passenger forecast
+
+Users can select a 6-, 12-, 18-, or 24-month horizon, review the forecast table, visualize future
+monthly demand, and download the results as a CSV file.
+
+![Future airline passenger forecast](outputs/forecast_plot.png)
+
+---
+
+## Project Status and Honest Scope
+
+This is a complete, deployable portfolio project built from the classic **AirPassengers** monthly
+time-series dataset. The supplied observations cover January 1949 through December 1960 and are used
+to demonstrate forecasting methodology, deep learning, evaluation, modular engineering, CI/CD, and
+deployment.
+
+The application is suitable for portfolio and educational demonstration. It is **not** a current
+airline-planning system and should not be used for operational decisions without retraining and
+validating the workflow on recent, governed, route-specific business data.
+
+---
+
+## Dataset
+
+The included sample contains the classic monthly international airline passenger series.
+
+| Dataset detail | Value |
+|---|---:|
+| Total observations | 144 months |
+| Full period | January 1949–December 1960 |
+| Training period | January 1949–December 1956 |
+| Validation period | January 1957–December 1958 |
+| Test period | January 1959–December 1960 |
+| Date column | `Month` |
+| Target column | `Passengers` |
+| Target unit | Thousands of passengers |
+| Personal or confidential data | None |
+
+The application also accepts compatible user-uploaded CSV files. It automatically:
+
+- detects and parses the date and passenger columns,
+- converts passenger counts to numeric values,
+- normalizes dates to monthly timestamps,
+- sorts records chronologically,
+- aggregates duplicate months,
+- inserts missing monthly periods,
+- interpolates missing passenger values,
+- rejects negative passenger counts.
+
+See [`data/README_data.md`](data/README_data.md) for the expected upload format and dataset notes.
+
+---
+
+## Feature Engineering
+
+The modeling workflow transforms the raw passenger series into three features per LSTM timestep:
+
+- **Standardized year-over-year log growth:** Measures how passenger demand changes relative to the same month one year earlier
+- **Month sine encoding:** Represents the cyclical position of each month
+- **Month cosine encoding:** Complements the sine feature and preserves the circular month relationship
+
+The core transformation is:
+
+```text
+Seasonal log growth at month t
+= log(Passengers_t + 1) - log(Passengers_t-12 + 1)
+```
+
+The predicted passenger level is reconstructed using the same month from the previous year:
+
+```text
+Forecast log level at month t
+= log level_t-12 + predicted seasonal log growth_t
+```
+
+The LSTM receives the previous 12 seasonal-growth observations. Since each observation already
+references the same month one year earlier, the effective raw passenger history is **24 months**.
+
+---
+
+## Technical Workflow
+
+1. Load the packaged sample dataset or a user-uploaded CSV file.
+2. Detect the monthly date and passenger-count columns.
+3. Parse dates and convert passenger values to numeric form.
+4. Aggregate duplicate months and restore missing monthly periods.
+5. Sort the series chronologically without random shuffling.
+6. Calculate year-over-year log passenger growth.
+7. Create sine and cosine calendar-month features.
+8. Split the series into chronological training, validation, and test periods.
+9. Fit the scaler only on training-period growth values.
+10. Generate 12-step LSTM input sequences.
+11. Train the compact LSTM using validation-based early stopping.
+12. Evaluate the untouched final 24 months.
+13. Compare the LSTM with transparent forecasting baselines.
+14. Save the trained model, scaler, configuration, metadata, predictions, and plots.
+15. Generate recursive future forecasts.
+16. Serve forecasts through an interactive Streamlit application.
+
+---
+
+## LSTM Architecture
+
+The Keras architecture contains **1,425 trainable parameters**.
+
+```text
+Input: 12 timesteps × 3 features
+    -> LSTM, 16 units
+    -> Dropout, 10%
+    -> Dense, 8 units with ReLU
+    -> Dense, 1 regression output
+```
+
+Training configuration:
+
+| Setting | Value |
+|---|---:|
+| Input shape | `(12, 3)` |
+| LSTM units | 16 |
+| Dropout | 0.10 |
+| Dense units | 8 |
+| Loss | Huber |
+| Optimizer | Adam |
+| Initial learning rate | 0.003 |
+| Batch size | 8 |
+| Maximum epochs | 150 |
+| Early-stopping patience | 12 |
+| Data shuffling | Disabled |
+| Backend | JAX |
+
+The compact architecture is intentional because the dataset contains only 144 monthly observations.
+
+---
+
+## Held-Out Test Results
+
+The final 24 months, January 1959 through December 1960, were not used to fit the model, scaler, or
+early-stopping decisions.
+
+| Metric | Result |
 |---|---:|
 | MAE | **13.74** |
 | RMSE | **18.70** |
 | MAPE | **3.00%** |
 | R² | **0.937** |
 
-### Baseline Comparison
+### Metric interpretation
+
+- **MAE** represents the average absolute passenger-demand prediction error.
+- **RMSE** penalizes larger forecast errors more heavily than MAE.
+- **MAPE** expresses the average prediction error as a percentage of actual passenger demand.
+- **R²** measures how much test-period variation is explained by the model.
+- **Residual analysis** helps identify systematic underprediction, overprediction, and model bias.
+
+---
+
+## Baseline Comparison
 
 | Model | MAE | RMSE | MAPE | R² |
 |---|---:|---:|---:|---:|
-| Seasonally adjusted LSTM | 13.74 | 18.70 | 3.00% | 0.937 |
+| **Seasonally adjusted LSTM** | **13.74** | **18.70** | **3.00%** | **0.937** |
 | Seasonal naive: previous year | 47.58 | 49.99 | 10.52% | 0.552 |
 | Naive: previous month | 44.21 | 51.78 | 9.73% | 0.519 |
 | 12-month moving average | 55.39 | 74.31 | 11.35% | 0.010 |
@@ -56,316 +270,326 @@ The final 24 months, January 1959 through December 1960, were held out from mode
 
 The LSTM reduced test RMSE by approximately **62.6%** relative to the strongest baseline by RMSE.
 
-## Dataset
+---
 
-The packaged sample is the classic monthly international airline passenger series:
+## Packaged Forecast Artifact
 
-- 144 monthly observations
-- January 1949 through December 1960
-- `Month`: monthly timestamp
-- `Passengers`: passenger totals in thousands
+The repository includes a reproducible 24-month recursive forecast artifact generated from the
+historical sample series.
 
-See [`data/README_data.md`](./data/README_data.md) for source and upload format details.
+| Forecast detail | Result |
+|---|---:|
+| Forecast horizon | 24 months |
+| Average forecast | 582.38 thousand passengers |
+| Ending forecast | 566.02 thousand passengers |
+| Change across forecast horizon | 27.50% |
+| Interpreted direction | Increasing |
 
-## Why the Model Predicts Seasonal Growth
+These values demonstrate the saved forecasting pipeline and should not be interpreted as current
+airline-industry projections.
 
-The original raw-level LSTM needed to learn an accelerating trend and multiplicative seasonal variation from only 144 observations. The improved pipeline instead models:
+---
 
-```text
-Seasonal log growth at month t
-= log(Passengers_t + 1) - log(Passengers_t-12 + 1)
-```
+## Streamlit Application
 
-The LSTM predicts the next standardized seasonal-growth value. The forecasted passenger level is reconstructed as:
+The deployed application supports:
 
-```text
-Forecast log level_t
-= log level_t-12 + predicted seasonal log growth_t
-```
+- Packaged AirPassengers sample data
+- Compatible monthly CSV upload
+- Automatic time-series validation and preparation
+- Historical passenger-data preview
+- Historical trend visualization
+- Calendar-month seasonality analysis
+- LSTM input-window and effective-history details
+- Selectable 6-, 12-, 18-, and 24-month forecast horizons
+- Test metrics for the packaged model
+- Descriptive historical metrics for uploaded datasets
+- Actual-versus-predicted visualization
+- Future forecast chart and table
+- Downloadable forecast CSV
+- Business interpretation and documented limitations
 
-This approach preserves the annual seasonal anchor while allowing the neural network to learn how year-over-year demand growth evolves.
+**Live application:**  
+[Open the Airline Passenger Forecasting application](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/)
 
-## Time-Series Preprocessing
+---
 
-1. Detect the date and passenger columns.
-2. Parse monthly timestamps.
-3. Convert passenger counts to numeric values.
-4. Remove invalid rows.
-5. Convert all dates to month-start timestamps.
-6. Aggregate duplicate months.
-7. Insert missing months and interpolate values.
-8. Sort chronologically.
-9. Calculate year-over-year log growth.
-10. Fit the scaler only on training-period growth values.
-
-The data is never randomly shuffled.
-
-## Chronological Split
-
-| Segment | Raw months | Period | Purpose |
-|---|---:|---|---|
-| Training | 96 | Jan 1949 – Dec 1956 | Fit scaler and model weights |
-| Validation | 24 | Jan 1957 – Dec 1958 | Early stopping and learning-rate control |
-| Test | 24 | Jan 1959 – Dec 1960 | Final untouched evaluation |
-
-The scaler sees only growth values associated with the training period.
-
-## Feature Engineering
-
-Each LSTM timestep contains three features:
-
-1. Standardized year-over-year log passenger growth
-2. Sine encoding of calendar month
-3. Cosine encoding of calendar month
-
-The LSTM input contains the previous 12 seasonal-growth observations. Because each growth value references the same month one year earlier, the effective raw history is **24 months**.
-
-## Sequence Generation
+## Project Structure
 
 ```text
-12 monthly seasonal-growth observations
-                 ↓
-Input tensor shape: (12, 3)
-                 ↓
-Predict the next seasonal-growth value
-                 ↓
-Reconstruct the next passenger level from month t-12
-```
-
-## Model Architecture
-
-```text
-Input: 12 timesteps × 3 features
-↓
-LSTM: 16 units
-↓
-Dropout: 10%
-↓
-Dense: 8 units, ReLU
-↓
-Dense: 1 regression output
-```
-
-Training configuration:
-
-- Loss: Huber loss
-- Optimizer: Adam
-- Initial learning rate: 0.003
-- Batch size: 8
-- Early stopping: validation loss, patience 12
-- Learning-rate reduction on plateau
-- Shuffle: disabled
-
-The compact architecture is intentional because the dataset is small.
-
-## Evaluation Metrics
-
-- **MAE:** average absolute forecast error in passenger-count units.
-- **RMSE:** penalizes larger forecast misses more heavily.
-- **MAPE:** percentage error relative to actual demand.
-- **R²:** proportion of test-period variation explained by the predictions.
-- **Residual analysis:** identifies systematic overprediction or underprediction.
-
-## Visual Outputs
-
-| Output | File |
-|---|---|
-| Historical trend | [`outputs/passenger_trend.png`](./outputs/passenger_trend.png) |
-| Seasonal pattern | [`outputs/seasonal_pattern.png`](./outputs/seasonal_pattern.png) |
-| Training curve | [`outputs/training_curve.png`](./outputs/training_curve.png) |
-| Actual vs predicted | [`outputs/actual_vs_predicted.png`](./outputs/actual_vs_predicted.png) |
-| Residual analysis | [`outputs/residual_plot.png`](./outputs/residual_plot.png) |
-| Future forecast | [`outputs/forecast_plot.png`](./outputs/forecast_plot.png) |
-| Baseline comparison | [`outputs/baseline_comparison.png`](./outputs/baseline_comparison.png) |
-
-### Test Performance
-
-![Actual vs predicted](./outputs/actual_vs_predicted.png)
-
-### Future Forecast
-
-![Future forecast](./outputs/forecast_plot.png)
-
-## Streamlit Demo Features
-
-- Use the packaged sample dataset
-- Upload a monthly CSV file
-- Preview processed passenger history
-- View historical trend and seasonal pattern
-- Select a 6, 12, 18, or 24-month forecast horizon
-- View model performance and actual-vs-predicted results
-- Generate a future forecast chart
-- Download forecast results as CSV
-- Read a business interpretation of the predicted trend
-
-The app loads the saved model and scaler and does not retrain during startup.
-
-## Folder Structure
-
-```text
-01-airline-passenger-forecasting/
-├── README.md
-├── IMPROVEMENTS.md
-├── README_HOSTING.md
-├── train_model.py
-├── requirements.txt
+lstm-projects/
+├── .github/
+│   └── workflows/
+│       └── 01-airline-passenger-forecasting.yml
+├── .streamlit/
+│   └── config.toml
+├── 01-airline-passenger-forecasting/
+│   ├── app/
+│   │   ├── streamlit_app.py
+│   │   └── requirements.txt
+│   ├── archive/
+│   │   └── original-project-files/
+│   ├── data/
+│   │   ├── README_data.md
+│   │   └── airline_passengers_sample.csv
+│   ├── images/
+│   ├── models/
+│   │   ├── airline_passenger_lstm.keras
+│   │   ├── seasonal_growth_scaler.pkl
+│   │   ├── best_config.json
+│   │   └── model_metadata.json
+│   ├── notebooks/
+│   │   └── airline_passenger_forecasting.ipynb
+│   ├── outputs/
+│   │   ├── passenger_trend.png
+│   │   ├── seasonal_pattern.png
+│   │   ├── training_curve.png
+│   │   ├── actual_vs_predicted.png
+│   │   ├── residual_plot.png
+│   │   ├── baseline_comparison.png
+│   │   ├── forecast_plot.png
+│   │   ├── model_metrics.json
+│   │   ├── test_predictions.csv
+│   │   ├── training_history.csv
+│   │   ├── baseline_comparison.csv
+│   │   └── future_forecast_24_months.csv
+│   ├── scripts/
+│   │   └── validate_project.py
+│   ├── src/
+│   │   ├── config.py
+│   │   ├── data_preprocessing.py
+│   │   ├── feature_engineering.py
+│   │   ├── sequence_generation.py
+│   │   ├── model_training.py
+│   │   ├── model_evaluation.py
+│   │   ├── forecasting_pipeline.py
+│   │   └── visualization.py
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   └── test_pipeline.py
+│   ├── .gitignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── README_HOSTING.md
+│   ├── requirements.txt
+│   ├── requirements-dev.txt
+│   ├── run_local.bat
+│   ├── run_local.sh
+│   └── train_model.py
 ├── .gitignore
-├── app/
-│   └── streamlit_app.py
-├── data/
-│   ├── airline_passengers_sample.csv
-│   └── README_data.md
-├── models/
-│   ├── airline_passenger_lstm.keras
-│   ├── seasonal_growth_scaler.pkl
-│   ├── model_metadata.json
-│   └── best_config.json
-├── notebooks/
-│   └── airline_passenger_forecasting.ipynb
-├── outputs/
-│   ├── passenger_trend.png
-│   ├── seasonal_pattern.png
-│   ├── training_curve.png
-│   ├── actual_vs_predicted.png
-│   ├── forecast_plot.png
-│   ├── residual_plot.png
-│   ├── baseline_comparison.png
-│   ├── model_metrics.json
-│   ├── test_predictions.csv
-│   ├── baseline_comparison.csv
-│   ├── future_forecast_24_months.csv
-│   └── model_summary.txt
-├── src/
-│   ├── data_preprocessing.py
-│   ├── feature_engineering.py
-│   ├── sequence_generation.py
-│   ├── model_training.py
-│   ├── model_evaluation.py
-│   ├── forecasting_pipeline.py
-│   └── visualization.py
-└── tests/
-    └── test_pipeline.py
+├── LICENSE
+└── README.md
 ```
+
+---
 
 ## Run Locally
 
-Open a terminal inside the project folder:
+Use Python 3.12 to match the tested local and deployment environments.
 
-```bash
-cd 01-airline-passenger-forecasting
-python -m venv .venv
+### Windows Command Prompt
+
+Clone the repository and enter the project folder:
+
+```bat
+git clone https://github.com/unit-mole/lstm-projects.git
+
+cd lstm-projects\01-airline-passenger-forecasting
 ```
 
-Activate the environment.
+Create and activate a virtual environment:
 
-**Windows PowerShell**
+```bat
+py -3.12 -m venv .venv
 
-```powershell
-.venv\Scripts\Activate.ps1
+.venv\Scripts\activate.bat
 ```
 
-**macOS/Linux**
+Install the project and testing dependencies:
 
-```bash
-source .venv/bin/activate
+```bat
+python -m pip install --upgrade pip setuptools wheel
+
+python -m pip install -r requirements.txt -r requirements-dev.txt
 ```
 
-Install dependencies and start the app:
+Run the project checks:
 
-```bash
-pip install -r requirements.txt
-streamlit run app/streamlit_app.py
+```bat
+python scripts\validate_project.py
+
+python -m pytest -q
 ```
 
-Windows users can alternatively double-click `run_local.bat`. Open the local URL shown by Streamlit, normally `http://localhost:8501`.
+Launch the Streamlit application:
 
-## Retrain the Model
+```bat
+python -m streamlit run app\streamlit_app.py
+```
 
-From the project directory:
+Open the local URL displayed by Streamlit, normally:
 
-```bash
-cd 01-airline-passenger-forecasting
+```text
+http://localhost:8501
+```
+
+### Future local runs
+
+After the first installation:
+
+```bat
+cd lstm-projects\01-airline-passenger-forecasting
+
+.venv\Scripts\activate.bat
+
+python -m streamlit run app\streamlit_app.py
+```
+
+Windows users can also run:
+
+```bat
+run_local.bat
+```
+
+---
+
+## Optional Retraining
+
+The included pretrained model runs without retraining. To rebuild the model and regenerate all
+forecasting artifacts:
+
+```bat
 python train_model.py
 ```
 
 Retraining regenerates:
 
-- the `.keras` model,
-- the scaler,
-- configuration and metadata,
-- evaluation tables,
-- future forecast CSV,
+- the `.keras` LSTM model,
+- the training-only scaler,
+- model configuration and metadata,
+- held-out predictions and metrics,
+- baseline-comparison results,
+- the future forecast CSV,
 - all saved visualizations.
 
-## Deploy
+Retraining is not required to run the included Streamlit application.
 
-Use the project-specific Streamlit entrypoint:
+---
+
+## Deployment
+
+The application is deployed on Streamlit Community Cloud and connected directly to the `main`
+branch of this GitHub repository.
+
+**Live application:**  
+[Open the Airline Passenger Forecasting application](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/)
+
+**Streamlit entry point:**
 
 ```text
 01-airline-passenger-forecasting/app/streamlit_app.py
 ```
 
-The app uses the `requirements.txt` stored inside this project folder. Complete instructions are available in [`README_HOSTING.md`](./README_HOSTING.md).
+**Cloud dependency file:**
+
+```text
+01-airline-passenger-forecasting/app/requirements.txt
+```
+
+Changes pushed to the relevant project files on the `main` branch automatically trigger a Streamlit
+application update.
+
+See [`README_HOSTING.md`](README_HOSTING.md) for deployment configuration, maintenance instructions,
+and troubleshooting guidance.
+
+---
 
 ## Model Artifacts
 
 | Artifact | Purpose |
 |---|---|
-| `airline_passenger_lstm.keras` | Model architecture and trained weights |
-| `seasonal_growth_scaler.pkl` | Training-only StandardScaler |
-| `best_config.json` | Input shape and training configuration |
-| `model_metadata.json` | Feature list, date ranges, split details, and test metrics |
+| `models/airline_passenger_lstm.keras` | Saved LSTM architecture and trained weights |
+| `models/seasonal_growth_scaler.pkl` | StandardScaler fitted only on training growth values |
+| `models/best_config.json` | Input shape and training configuration |
+| `models/model_metadata.json` | Feature list, split dates, target details, and test metrics |
 
-## Business Interpretation
+The Streamlit application loads these artifacts directly and does not retrain the model during startup.
 
-The model performs well when the historical annual seasonal pattern remains informative and year-over-year growth changes gradually. It may struggle during structural breaks such as recessions, pandemics, route-network changes, major policy shifts, strikes, or capacity constraints.
+---
 
-Forecast error matters operationally:
+## Data and Repository Safety
 
-- underprediction can lead to insufficient capacity and staffing,
-- overprediction can lead to unused capacity and higher operating costs,
-- seasonal peak errors can affect revenue and customer experience disproportionately.
+- The included dataset is public, non-confidential demonstration data.
+- No personal, customer, employee, or proprietary airline data is included.
+- Only a small reproducible sample dataset is stored in the repository.
+- Virtual environments, caches, temporary files, logs, and secrets are excluded through `.gitignore`.
+- Streamlit secrets must not be committed to GitHub.
+- Saved inference artifacts under `models/` are required by the deployed application.
+- Uploaded data is processed within the application session and is not used to retrain the model.
 
-## Limitations
+---
 
-- The sample contains only one univariate passenger series.
-- No external variables are included.
-- Recursive forecasts accumulate uncertainty over longer horizons.
-- Prediction intervals are not included.
-- The model is not route-specific and is not a production airline planning system.
-- Uploaded datasets are scored with the packaged model; they are not automatically retrained.
+## Known Limitations
+
+- The sample contains only one univariate historical passenger series.
+- The observations end in December 1960 and do not represent present-day airline demand.
+- The model does not include fares, GDP, holidays, fuel prices, route capacity, competition, weather, or disruptions.
+- Recursive multi-step forecasts accumulate uncertainty over longer horizons.
+- Prediction intervals are not currently included.
+- Uploaded datasets are scored with the packaged model and are not automatically retrained.
+- Historical metrics for uploaded datasets are descriptive and do not constitute independent validation.
+- The model is not route-specific and is not a production airline-planning system.
+- Structural breaks such as pandemics, recessions, strikes, policy changes, and network redesigns may reduce accuracy.
+
+---
 
 ## Future Improvements
 
-- Add fares, GDP, fuel prices, holidays, route capacity, and disruption indicators.
-- Add walk-forward cross-validation.
-- Add probabilistic prediction intervals.
-- Compare against SARIMA, ETS, Prophet, XGBoost, and Temporal Fusion Transformer models.
-- Add direct multi-horizon prediction instead of recursive forecasting.
-- Add automated data-drift checks and scheduled retraining.
-- Add experiment tracking and model registry integration.
+- Retrain on recent, governed, route-level airline demand data
+- Add fares, GDP, fuel prices, holidays, route capacity, weather, and disruption indicators
+- Add walk-forward and rolling-origin cross-validation
+- Add probabilistic forecasts and prediction intervals
+- Compare against SARIMA, ETS, Prophet, XGBoost, and Temporal Fusion Transformer models
+- Add direct multi-horizon forecasting instead of recursive forecasting
+- Add route-, region-, and cabin-level forecasting
+- Add model and data-drift monitoring
+- Add scheduled retraining and model-registry integration
+- Add experiment tracking and automated model comparison
+- Add downloadable forecast reports and scenario analysis
+
+---
 
 ## Skills Demonstrated
 
-- LSTM time-series forecasting
-- Demand forecasting and travel analytics
-- Trend and seasonality analysis
-- Leakage prevention and chronological validation
-- Sequence generation and cyclical features
-- Model evaluation and baseline benchmarking
-- Residual analysis and business interpretation
-- Model persistence with Keras
-- Modular Python development and testing
-- Streamlit application deployment
+`Time-Series Forecasting` · `Long Short-Term Memory Networks` · `Demand Forecasting` ·
+`Trend Analysis` · `Seasonality Analysis` · `Feature Engineering` · `Sequence Generation` ·
+`Chronological Validation` · `Data-Leakage Prevention` · `Regression Evaluation` ·
+`Baseline Benchmarking` · `Residual Analysis` · `Keras` · `JAX` · `scikit-learn` ·
+`pandas` · `Plotly` · `Streamlit` · `Model Deployment` · `Testing` · `CI/CD` ·
+`Business Translation`
+
+---
 
 ## Portfolio Description
 
-**One-line version:**  
-Built a seasonality-aware LSTM demand forecasting system with leakage-safe evaluation, baseline benchmarking, multi-step forecasts, and a deployed Streamlit interface.
+**One-line description**
 
-**Pinned-repository version:**  
-End-to-end airline passenger forecasting using a seasonally adjusted Keras LSTM. Includes chronological train/validation/test splitting, training-only scaling, 3.00% test MAPE, baseline comparison, recursive 6–24 month forecasting, reusable Python modules, saved inference artifacts, and an interactive Streamlit demo.
+> Built and deployed a seasonality-aware LSTM that forecasts monthly airline passenger demand, outperforms classical baselines, and generates interactive 6–24 month forecasts through Streamlit.
+
+**Pinned-repository description**
+
+> End-to-end airline passenger forecasting project featuring chronological time-series validation, training-only scaling, year-over-year growth modeling, cyclical month features, LSTM forecasting, baseline benchmarking, residual analysis, automated testing, CI/CD, and Streamlit deployment.
+
+---
 
 ## Original Notebook Review
 
-See [`IMPROVEMENTS.md`](./IMPROVEMENTS.md) for the detailed review and the methodological changes made to the attached original notebook.
+See [`IMPROVEMENTS.md`](IMPROVEMENTS.md) for the detailed review of the original notebook and the
+methodological improvements introduced in the portfolio-ready version.
+
+---
+
+## Author
+
+**Anmol Tripathi**  
+Quality Data Scientist | Data Science | Machine Learning | Applied AI | Analytics

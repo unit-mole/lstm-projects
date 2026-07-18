@@ -64,8 +64,8 @@ The application produces:
 
 The application provides an interactive interface for exploring historical airline passenger demand
 and generating future forecasts with the deployed LSTM model. Users can select the packaged sample
-dataset or upload a compatible monthly passenger CSV file, choose the forecast horizon, and review
-the key forecast summary.
+dataset or upload a compatible monthly passenger CSV file, choose a forecast horizon, and review the
+main forecast summary.
 
 ![Airline Passenger Forecasting application overview](images/01_app_overview.png)
 
@@ -79,19 +79,47 @@ by the forecasting pipeline.
 
 ### 3. Future passenger forecast
 
-Users can select a forecast horizon of 6, 12, 18, or 24 months. The application combines the
-historical observations with recursively generated LSTM forecasts and reports the expected demand
-direction, average forecast, and future monthly passenger counts.
+Users can select a forecast horizon of 6, 12, 18, or 24 months. The application combines historical
+observations with recursively generated LSTM forecasts and reports the expected demand direction,
+average forecast, and future monthly passenger counts.
 
 ![Future airline passenger forecast](images/03_future_passenger_forecast.png)
 
 ### 4. Model-performance dashboard
 
-The model-performance section reports MAE, RMSE, MAPE, and R² calculated on the final 24
-chronologically held-out months. It also includes actual-versus-predicted results and supporting
-evaluation visualizations for understanding forecast accuracy and model limitations.
+The model-performance dashboard reports MAE, RMSE, MAPE, and R² calculated on the final 24
+chronologically held-out months. It provides a concise application-level summary before presenting
+the supporting technical evaluation plots.
 
-![Airline passenger forecasting model performance](images/04_model_performance.png)
+![Airline passenger forecasting model-performance dashboard](images/04_model_performance.png)
+
+#### Actual versus predicted passenger demand
+
+This plot compares observed passenger counts with LSTM predictions during the held-out test period.
+Closer alignment between the two series indicates stronger forecasting accuracy.
+
+![Actual versus predicted airline passenger demand](outputs/actual_vs_predicted.png)
+
+#### Residual analysis
+
+Residuals help reveal systematic underprediction, overprediction, changing error variance, and
+periods where the model does not fully capture passenger-demand movement.
+
+![Airline passenger forecast residual analysis](outputs/residual_plot.png)
+
+#### Baseline comparison
+
+The LSTM is compared with naive, seasonal-naive, moving-average, and linear-trend baselines to
+demonstrate whether the neural forecasting approach provides measurable value.
+
+![LSTM forecasting baseline comparison](outputs/baseline_comparison.png)
+
+#### Training and validation loss
+
+The training-history chart compares training and validation loss across epochs. It helps assess
+model convergence and whether validation performance begins to deteriorate as training continues.
+
+![LSTM training and validation loss](outputs/training_curve.png)
 
 ---
 
@@ -323,6 +351,7 @@ lstm-projects/
 │   │   └── 04_model_performance.png
 │   ├── models/
 │   │   ├── airline_passenger_lstm.keras
+│   │   ├── airline_passenger_lstm_weights.npz
 │   │   ├── seasonal_growth_scaler.pkl
 │   │   ├── best_config.json
 │   │   └── model_metadata.json
@@ -496,12 +525,13 @@ and troubleshooting guidance.
 
 | Artifact | Purpose |
 |---|---|
-| `models/airline_passenger_lstm.keras` | Saved LSTM architecture and trained weights |
-| `models/seasonal_growth_scaler.pkl` | StandardScaler fitted only on training growth values |
+| `models/airline_passenger_lstm.keras` | Saved Keras LSTM architecture and trained weights for local training and reproducibility |
+| `models/airline_passenger_lstm_weights.npz` | Lightweight trained-weight artifact used for stable NumPy inference on Streamlit Community Cloud |
+| `models/seasonal_growth_scaler.pkl` | StandardScaler fitted only on training-period growth values |
 | `models/best_config.json` | Input shape and training configuration |
 | `models/model_metadata.json` | Feature list, split dates, target details, and test metrics |
 
-The Streamlit application loads these artifacts directly and does not retrain the model during startup.
+The Streamlit application loads the saved inference artifacts directly and does not retrain the model during startup.
 
 ---
 

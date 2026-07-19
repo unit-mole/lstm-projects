@@ -1,0 +1,51 @@
+{
+  "project_name": "Industrial Equipment Failure Detection using LSTM Autoencoder",
+  "project_slug": "07-industrial-equipment-failure-detection-lstm-autoencoder",
+  "model_file": "lstm_autoencoder_predictive_maintenance.keras",
+  "scaler_file": "scaler.pkl",
+  "portable_scaler_file": "scaler.json",
+  "seq_len": 20,
+  "step_size": 1,
+  "n_features": 8,
+  "sensor_cols": [
+    "sensor_1",
+    "sensor_2",
+    "sensor_3",
+    "sensor_4",
+    "sensor_5",
+    "sensor_6",
+    "sensor_7",
+    "sensor_8"
+  ],
+  "unit_id_col": "unit_id",
+  "time_col": "cycle",
+  "label_col": "failure_label",
+  "threshold": 0.33097612857818604,
+  "threshold_method": "mean(train healthy sequence MAE) + 3 \u00d7 standard deviation",
+  "reconstruction_metric": "mean absolute error across all time steps and sensor features",
+  "health_bands": {
+    "normal": "error <= threshold",
+    "warning": "threshold < error <= 1.5 * threshold",
+    "high_risk": "error > 1.5 * threshold"
+  },
+  "architecture": [
+    "Input(20, 8)",
+    "LSTM(64, return_sequences=True)",
+    "LSTM(32)",
+    "RepeatVector(20)",
+    "LSTM(32, return_sequences=True)",
+    "LSTM(64, return_sequences=True)",
+    "TimeDistributed(Dense(8))"
+  ],
+  "parameter_count": 64776,
+  "loss": "mean_squared_error",
+  "optimizer": "Adam(learning_rate=0.001)",
+  "seed": 42,
+  "split_strategy": "grouped by unit_id: 70% train / 15% validation / 15% test",
+  "training_strategy": "healthy windows only; labels used only for validation/test evaluation",
+  "default_inference_backend": "portable NumPy inference from Keras v3 weights",
+  "optional_inference_backend": "TensorFlow/Keras when installed",
+  "original_keras_version": "3.13.2",
+  "metrics_file": "../outputs/model_metrics.json",
+  "responsible_use": "Educational portfolio demonstration only; not a production maintenance or safety system."
+}

@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets
+.streamlit/secrets.toml
+.env
+
+# Local/private/large data
+data/raw/
+data/private/
+data/*.parquet
+data/*.zip
+!data/sample_equipment_sensor_data.csv
+
+# Generated training artifacts (the curated portfolio artifacts remain tracked)
+models/checkpoints/
+outputs/runs/
+logs/
+
+# TensorFlow
+*.h5
+*.ckpt*

@@ -1,0 +1,81 @@
+name: 07 - Industrial Equipment Failure Detection CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "07-industrial-equipment-failure-detection-lstm-autoencoder/**"
+      - ".github/workflows/07-industrial-equipment-failure-detection-lstm-autoencoder.yml"
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - "07-industrial-equipment-failure-detection-lstm-autoencoder/**"
+      - ".github/workflows/07-industrial-equipment-failure-detection-lstm-autoencoder.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: 07-industrial-equipment-failure-detection-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-checks:
+    name: Lint, test, and validate artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: 07-industrial-equipment-failure-detection-lstm-autoencoder
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            07-industrial-equipment-failure-detection-lstm-autoencoder/requirements.txt
+            07-industrial-equipment-failure-detection-lstm-autoencoder/requirements-dev.txt
+
+      - name: Install CI dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest pytest-cov ruff
+
+      - name: Validate required project files
+        run: |
+          test -f README.md
+          test -f app/streamlit_app.py
+          test -f models/lstm_autoencoder_predictive_maintenance.keras
+          test -f models/model_metadata.json
+          test -f models/scaler.json
+          test -f data/sample_equipment_sensor_data.csv
+          test -f train_model.py
+
+      - name: Compile Python source files
+        run: |
+          python -m compileall -q app scripts src tests train_model.py
+
+      - name: Run Ruff checks
+        run: |
+          ruff check app scripts src tests train_model.py
+
+      - name: Run automated tests
+        run: |
+          pytest tests -q --disable-warnings --maxfail=1
+
+      - name: Validate packaged model artifacts
+        run: |
+          python scripts/evaluate_artifacts.py

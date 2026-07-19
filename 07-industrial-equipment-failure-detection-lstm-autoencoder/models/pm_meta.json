@@ -1,0 +1,16 @@
+{
+    "seq_len": 20,
+    "n_features": 8,
+    "threshold": 0.3309761472046375,
+    "sensor_cols": [
+        "sensor_1",
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_5",
+        "sensor_6",
+        "sensor_7",
+        "sensor_8"
+    ],
+    "seed": 42
+}

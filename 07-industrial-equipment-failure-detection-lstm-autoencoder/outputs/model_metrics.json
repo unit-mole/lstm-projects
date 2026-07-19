@@ -1,0 +1,48 @@
+{
+  "validation": {
+    "accuracy": 0.840958605664488,
+    "roc_auc": 0.9327760514683355
+  },
+  "test": {
+    "accuracy": 0.7984749455337691,
+    "roc_auc": 0.8867048318414877,
+    "pr_auc_average_precision": 0.7441801691899186,
+    "healthy_precision": 0.9193857965451055,
+    "healthy_recall": 0.770096463022508,
+    "healthy_f1": 0.8381452318460193,
+    "failure_precision": 0.6397984886649875,
+    "failure_recall": 0.8581081081081081,
+    "failure_f1": 0.733044733044733,
+    "support_healthy": 622,
+    "support_failure": 296,
+    "confusion_matrix": [
+      [
+        479,
+        143
+      ],
+      [
+        42,
+        254
+      ]
+    ]
+  },
+  "threshold": {
+    "value": 0.33097612857818604,
+    "method": "mean(train healthy sequence MAE) + 3 \u00d7 standard deviation",
+    "reconstruction_metric": "mean absolute error across all time steps and sensor features",
+    "train_error_mean": 0.20790594816207886,
+    "train_error_std": 0.04102339968085289
+  },
+  "data": {
+    "source": "deterministic synthetic turbofan-style multivariate sensor data",
+    "rows": 8400,
+    "units": 120,
+    "cycles_per_unit": 70,
+    "train_units": 84,
+    "validation_units": 18,
+    "test_units": 18,
+    "train_healthy_windows": 2854,
+    "validation_windows": 918,
+    "test_windows": 918
+  }
+}

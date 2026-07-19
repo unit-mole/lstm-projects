@@ -8,8 +8,9 @@
 
 An end-to-end Natural Language Processing project that uses Long Short-Term Memory (LSTM) networks to classify statements as **Real** or **Fake**. The repository includes reproducible preprocessing, sequence modeling, model evaluation, probability-based predictions, error analysis, saved artifacts, and a deployable Streamlit application.
 
-**Status:** Portfolio-ready  
-**Live demo:** https://lstm-projects-ebn4nfredardyuuzskgnpw.streamlit.app/  
+**Status:** Portfolio-ready and deployed  
+**Live demo:** [Open the Fake News Detection application](https://lstm-projects-ebn4nfredardyuuzskgnpw.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-ebn4nfredardyuuzskgnpw.streamlit.app/)  
 **Primary stack:** Python · PyTorch · LSTM · NLP · scikit-learn · Streamlit
 
 ---

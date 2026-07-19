@@ -1,0 +1,51 @@
+{
+  "project": "ECG Anomaly Detection using LSTM Autoencoder with Temporal Attention Analysis",
+  "supplied_model_type": "Stacked LSTM Autoencoder",
+  "supplied_model_has_trainable_attention": false,
+  "deployed_explainability": "Post-hoc temporal focus weights derived from pointwise absolute reconstruction error. These are not trained model-attention weights.",
+  "clean_retraining_architecture": "The optional retraining module includes a trainable temporal attention pooling layer.",
+  "sequence_length": 140,
+  "number_of_features": 1,
+  "threshold": 0.0321530313231051,
+  "threshold_method": "Mean training-normal MAE plus three standard deviations",
+  "calculated_threshold": 0.03215305879712105,
+  "reconstruction_error": "Mean absolute error across 140 timesteps",
+  "training_rows_total_before_normal_filter": 2100,
+  "training_normal_rows": 1540,
+  "validation_rows": 450,
+  "test_rows": 450,
+  "test_normal_rows": 330,
+  "test_anomaly_rows": 120,
+  "parameter_count": 62529,
+  "architecture": [
+    "LSTM 64 return_sequences",
+    "LSTM 32 latent vector",
+    "RepeatVector 140",
+    "LSTM 32 return_sequences",
+    "LSTM 64 return_sequences",
+    "TimeDistributed Dense 1"
+  ],
+  "supplied_metrics": {
+    "validation_accuracy": 0.9955555555555555,
+    "validation_roc_auc": 1.0,
+    "test_accuracy": 0.9977777777777778,
+    "test_precision_anomaly": 0.9917355371900827,
+    "test_recall_anomaly": 1.0,
+    "test_f1_anomaly": 0.995850622406639,
+    "test_roc_auc": 1.0,
+    "test_pr_auc": 0.9999999999999999,
+    "confusion_matrix": [
+      [
+        329,
+        1
+      ],
+      [
+        0,
+        120
+      ]
+    ]
+  },
+  "data_type": "Synthetic, privacy-safe ECG-like waveforms",
+  "medical_disclaimer": "Educational portfolio demonstration only. Not a medical diagnostic tool and not for clinical decisions.",
+  "seed": 42
+}

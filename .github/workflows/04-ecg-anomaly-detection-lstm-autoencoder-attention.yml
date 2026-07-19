@@ -1,0 +1,49 @@
+name: ECG LSTM Autoencoder CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "04-ecg-anomaly-detection-lstm-autoencoder-attention/**"
+      - ".github/workflows/04-ecg-anomaly-detection-lstm-autoencoder-attention.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "04-ecg-anomaly-detection-lstm-autoencoder-attention/**"
+      - ".github/workflows/04-ecg-anomaly-detection-lstm-autoencoder-attention.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-ecg-anomaly-detection-lstm-autoencoder-attention
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: 04-ecg-anomaly-detection-lstm-autoencoder-attention/requirements-dev.txt
+
+      - name: Install deployment and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Validate project artifacts
+        run: python scripts/validate_project.py
+
+      - name: Run automated tests
+        run: python -m pytest -q
+
+      - name: Compile Python files
+        run: python -m compileall -q app src scripts tests train_model.py

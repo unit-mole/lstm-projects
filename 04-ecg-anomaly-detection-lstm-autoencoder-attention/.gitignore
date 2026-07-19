@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.streamlit/secrets.toml
+*.log
+.DS_Store
+Thumbs.db
+data/private_*
+data/raw_*
+outputs/local_*
+models/*_local.keras

@@ -1,0 +1,36 @@
+{
+  "validation": {
+    "accuracy": 0.9955555555555555,
+    "roc_auc": 1.0
+  },
+  "test": {
+    "accuracy": 0.9977777777777778,
+    "precision_anomaly": 0.9917355371900827,
+    "recall_anomaly": 1.0,
+    "f1_anomaly": 0.995850622406639,
+    "roc_auc": 1.0,
+    "pr_auc": 0.9999999999999999,
+    "confusion_matrix": [
+      [
+        329,
+        1
+      ],
+      [
+        0,
+        120
+      ]
+    ]
+  },
+  "threshold": {
+    "value": 0.0321530313231051,
+    "calculated_from_exported_weights": 0.03215305879712105,
+    "method": "training normal MAE mean plus three standard deviations"
+  },
+  "reconstruction_error": {
+    "training_normal_mean": 0.02723027765750885,
+    "training_normal_std": 0.0016409273957833648,
+    "test_normal_mean": 0.02736055478453636,
+    "test_anomaly_mean": 0.18015050888061523
+  },
+  "attention_qualification": "The supplied pretrained model has no trainable attention layer. The app uses post-hoc temporal focus derived from pointwise reconstruction error. Optional retraining code defines a true attention-enabled architecture."
+}

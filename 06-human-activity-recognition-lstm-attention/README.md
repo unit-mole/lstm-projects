@@ -1,114 +1,384 @@
+
 # Human Activity Recognition using LSTM with Attention
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange.svg)](https://www.tensorflow.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](#)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.21-orange.svg)](https://www.tensorflow.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-tyegesrwm2jemjbldq4fju.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![HAR LSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/06-human-activity-recognition-lstm-attention.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/06-human-activity-recognition-lstm-attention.yml)
 
-An end-to-end wearable-analytics portfolio project that classifies multivariate synthetic sensor sequences using stacked LSTM layers and temporal attention. It includes reproducible data generation, baseline comparison, multiclass evaluation, saved model artifacts, tests, and a deployable Streamlit application.
+An end-to-end human activity recognition project that uses stacked Long Short-Term Memory (LSTM) networks and an attention mechanism to classify human activities from multivariate sensor sequences. The repository includes reproducible preprocessing, model evaluation, saved artifacts, interactive visualizations, and a deployable Streamlit application.
 
 **Status:** Portfolio-ready  
-**Live demo:** Add the deployed Streamlit URL  
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](#)  
-**Primary stack:** Python · TensorFlow/Keras · LSTM · Attention · NumPy · pandas · Streamlit
+**Live demo:** [Open the Streamlit application](https://lstm-projects-tyegesrwm2jemjbldq4fju.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-tyegesrwm2jemjbldq4fju.streamlit.app/)  
+**Primary stack:** Python · TensorFlow · Keras · LSTM · Attention · scikit-learn · Streamlit
 
 ---
 
-## Responsible Use
-This educational demo must not be used as the sole basis for healthcare, safety, surveillance, insurance, employment, or legal decisions. Do not upload private sensor data. The model was trained on synthetic patterns and may not generalize to real devices or people.
+## Responsible Use and Privacy
 
-## Applied AI Problem
-> Given 80 ordered readings from six motion-sensor channels, can the model classify the represented physical activity?
+This repository is an educational portfolio demonstration.
 
-Outputs include the predicted activity, confidence, complete class distribution, top-three probabilities, signal chart, and downloadable result.
+- Do not use this model for healthcare, safety, surveillance, insurance, employment, or legal decisions.
+- Do not upload private sensor or behavioral data to the demo application.
+- The model may produce incorrect predictions and should not be treated as a production wearable-analytics system.
+- High benchmark performance on synthetic data does not imply real-world wearable-device performance.
+
+---
+
+## Business Problem
+
+Human activity recognition is a multivariate time-series classification problem.
+
+> Given a sequence of accelerometer and gyroscope readings, can a deep-learning model determine which activity a person is performing?
+
+The deployed pipeline predicts:
+
+- Predicted activity
+- Confidence score
+- Full probability distribution
+- Top-three candidate activities
+- Sensor-sequence interpretation
+
+---
+
+## Project Objective
+
+This project demonstrates how sequential sensor data can be modeled using an LSTM architecture enhanced with an attention mechanism.
+
+The solution is designed to:
+
+1. Generate and preprocess wearable sensor sequences.
+2. Normalize multivariate time-series data.
+3. Train a stacked LSTM model.
+4. Learn temporal importance using attention.
+5. Classify activities from sensor windows.
+6. Save reusable model artifacts.
+7. Support interactive inference through Streamlit.
+8. Demonstrate deployment-ready ML engineering practices.
+
+---
+
+## Portfolio Scope
+
+This repository uses a deterministic synthetic wearable dataset created for educational purposes. It is not a production-grade HAR system and should not be used for operational decision-making.
+
+---
 
 ## Dataset
-The notebook deterministically generates 3,600 synthetic windows. Each window has shape **80 × 6** and represents one of six activities: walking, walking upstairs, walking downstairs, sitting, standing, and laying. The included metadata confirms the 80-step input, six features, and six classes.
 
-No real subject identifiers or private wearable records are distributed.
+The notebook generates synthetic smartphone-style sensor sequences with:
 
-## Model Architecture
+| Attribute | Value |
+|---|---:|
+| Sequence length | 80 time steps |
+| Sensor features | 6 |
+| Activity classes | 6 |
+
+Supported activities:
+
+- Walking
+- Walking Upstairs
+- Walking Downstairs
+- Sitting
+- Standing
+- Laying
+
+The generated sequences simulate accelerometer and gyroscope patterns commonly observed in wearable activity-recognition systems.
+
+---
+
+## Tools and Technologies
+
+| Area | Technology |
+|---|---|
+| Language | Python |
+| Deep learning | TensorFlow / Keras |
+| Sequence modeling | LSTM |
+| Attention mechanism | Custom attention layer |
+| Data processing | pandas, NumPy |
+| Evaluation | scikit-learn |
+| Visualization | Matplotlib, Plotly |
+| Demo application | Streamlit |
+| Artifact storage | Keras, JSON |
+| Testing | pytest |
+| Hosting | Streamlit Community Cloud |
+
+---
+
+## Project Workflow
+
 ```text
-80 × 6 sensor sequence
-        ↓
-LSTM (96 units, return sequences)
-        ↓
-Dropout (0.30)
-        ↓
-LSTM (64 units, return sequences)
-        ↓
-Temporal Attention
-        ↓
-Dense (64, ReLU) + Dropout
-        ↓
-Six-class Softmax
+Synthetic wearable signals
+        │
+        ▼
+Sensor preprocessing
+        │
+        ▼
+Train / validation / test split
+        │
+        ▼
+Sequence generation
+        │
+        ▼
+Feature normalization
+        │
+        ▼
+Stacked LSTM training
+        │
+        ▼
+Temporal attention layer
+        │
+        ▼
+Softmax classification
+        │
+        ▼
+Evaluation and confusion matrix
+        │
+        ▼
+Saved artifacts + Streamlit demo
 ```
 
-Attention learns a normalized importance score across time steps and combines the sequence into a context vector for classification.
+## Sequence Generation
 
-## Results
-| Model | Validation accuracy | Test accuracy |
+The project converts raw sensor signals into fixed-length windows:
+
+```text
+Input shape: 80 × 6
+
+Features:
+- Accelerometer X
+- Accelerometer Y
+- Accelerometer Z
+- Gyroscope X
+- Gyroscope Y
+- Gyroscope Z
+```
+
+Each window receives an activity label and is used as input to the LSTM model.
+
+---
+
+## LSTM with Attention Architecture
+
+```text
+Sensor Sequence Input (80 × 6)
+            ↓
+LSTM Layer (96 units)
+            ↓
+LSTM Layer (64 units)
+            ↓
+Attention Layer
+            ↓
+Dense Layer
+            ↓
+Softmax Output (6 classes)
+```
+
+Training uses:
+
+- Adam optimizer
+- Sparse categorical cross-entropy
+- Early stopping
+- Validation monitoring
+- Attention-enhanced sequence learning
+
+---
+
+## Why Attention?
+
+The attention mechanism allows the model to focus on the most informative parts of a sensor sequence.
+
+Instead of treating all time steps equally, the model learns which moments are most useful for distinguishing activities such as:
+
+- Walking vs Walking Upstairs
+- Sitting vs Standing
+- Standing vs Laying
+
+This improves interpretability and sequence modeling.
+
+---
+
+## Model Results
+
+| Model | Validation Accuracy | Test Accuracy |
 |---|---:|---:|
 | Baseline LSTM | 79.07% | 79.44% |
-| LSTM with Attention | 99.07% | 98.52% |
+| LSTM + Attention | 99.07% | 98.52% |
 
-The attention model achieved macro F1 **98.50%** and weighted F1 **98.51%** on the synthetic test set. These results demonstrate successful learning of the designed synthetic patterns, not validated real-world HAR performance.
+Approximate evaluation metrics:
 
-## Visual Results
-| Training accuracy | Training loss |
+| Metric | Value |
+|---|---:|
+| Accuracy | 98.52% |
+| Macro F1 | 98.50% |
+| Weighted F1 | 98.51% |
+
+These values apply to the synthetic benchmark dataset supplied in the notebook.
+
+---
+
+## Error Analysis
+
+Common confusion patterns include:
+
+- Walking vs Walking Upstairs
+- Walking Upstairs vs Walking Downstairs
+- Sitting vs Standing
+
+Potential causes:
+
+- Similar periodic movement patterns.
+- Overlapping accelerometer signatures.
+- Small differences in sensor intensity.
+
+---
+
+## Visual Model Results
+
+| Training Accuracy | Training Loss |
 |---|---|
-| ![Training accuracy](outputs/training_accuracy.png) | ![Training loss](outputs/training_loss.png) |
+| ![](outputs/training_accuracy.png) | ![](outputs/training_loss.png) |
 
-| Confusion matrix | Activity error rates |
+| Confusion Matrix | Activity Errors |
 |---|---|
-| ![Confusion matrix](outputs/confusion_matrix.png) | ![Error rates](outputs/activity_error_rates.png) |
+| ![](outputs/confusion_matrix.png) | ![](outputs/activity_error_rates.png) |
+
+---
 
 ## Streamlit Demo
-The app supports generated samples, 80-row CSV uploads, sensor-signal visualization, six-class probabilities, top-three predictions, confidence reporting, and downloadable results.
+
+The deployed application supports:
+
+- Generated sample data
+- CSV upload
+- Sensor-signal visualization
+- Window selection
+- Activity prediction
+- Confidence scores
+- Top-three probabilities
+- Downloadable predictions
+- Model details and limitations
+
+### Application Overview
+
+![](images/01_application_overview.png)
+
+### Activity Prediction Results
+
+![](images/02_activity_prediction_results.png)
+
+### Model Details and Limitations
+
+![](images/03_model_details_and_limitations.png)
+
+---
+
+## Model Artifacts
+
+| Artifact | Purpose |
+|---|---|
+| `models/lstm_attention_har.keras` | Trained model |
+| `models/har_meta.json` | Sequence length, classes, metadata |
+| `outputs/*.png` | Evaluation visualizations |
+| `data/sample_activity_data.csv` | Sample sensor data |
+
+---
 
 ## Run Locally
+
+### 1. Open the project folder
+
 ```bash
 cd lstm-projects/06-human-activity-recognition-lstm-attention
-python -m venv .venv
+```
+
+### 2. Create a virtual environment
+
+Windows:
+
+```bat
+py -3.12 -m venv .venv
 .venv\Scripts\activate
+```
+
+macOS/Linux:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
+
+### 4. Run tests
+
+```bash
+python -m pytest -q
+python -m compileall src app
+```
+
+### 5. Launch Streamlit
+
+```bash
 python -m streamlit run app/streamlit_app.py
 ```
 
-## Deploy
+Open:
+
+```text
+http://localhost:8501
+```
+
+---
+
+## Deployment
+
 - Repository: `unit-mole/lstm-projects`
 - Branch: `main`
 - Entrypoint: `06-human-activity-recognition-lstm-attention/app/streamlit_app.py`
+- Python: `3.12`
 
-See [README_HOSTING.md](README_HOSTING.md).
+Live application:
 
-## Project Structure
-```text
-06-human-activity-recognition-lstm-attention/
-├── app/
-├── data/
-├── images/
-├── models/
-├── notebooks/
-├── outputs/
-├── src/
-├── tests/
-├── README.md
-├── README_HOSTING.md
-└── requirements.txt
-```
+https://lstm-projects-tyegesrwm2jemjbldq4fju.streamlit.app/
 
-## Future Improvements
-- Validate on UCI HAR or WISDM using subject-wise splits.
-- Add real attention-weight visualization.
-- Compare with CNN-LSTM and transformer encoders.
-- Add sensor-noise and device-shift robustness testing.
-- Evaluate latency and model compression for edge deployment.
+For deployment details, see `README_HOSTING.md`.
+
+---
 
 ## Skills Demonstrated
-LSTM sequence modeling · temporal attention · multivariate time-series classification · synthetic data design · multiclass evaluation · model persistence · Streamlit deployment · responsible AI communication · testing and modular ML engineering
+
+- Long Short-Term Memory (LSTM)
+- Attention mechanisms
+- Sequence modeling
+- Multivariate time-series classification
+- Wearable sensor analytics
+- Deep learning with TensorFlow/Keras
+- Model evaluation and error analysis
+- Streamlit deployment
+- Model persistence
+- GitHub Actions and testing
+
+---
 
 ## Portfolio Positioning
-**One-line description:** Attention-enhanced LSTM system that classifies six physical activities from multivariate motion-sensor sequences through an interactive Streamlit application.
 
-**Author:** Anmol Tripathi — Quality Data Scientist building a portfolio for Data Science, Machine Learning, Applied AI, Analytics Engineering, and Quality Analytics roles.
+**One-line description:** Human activity recognition system that uses stacked LSTMs and temporal attention to classify multivariate wearable sensor sequences.
+
+**Pinned repository description:** End-to-end time-series classification project featuring LSTM sequence modeling, attention mechanisms, sensor analytics, interactive inference, and Streamlit deployment.
+
+This project strengthens a transition from Quality Data Scientist to Data Science, Machine Learning, and Applied AI roles by demonstrating expertise in sequential modeling, time-series analytics, explainable deep learning, deployment, and production-oriented project organization.
+
+---
+
+## Author
+
+**Anmol Tripathi**  
+Quality Data Scientist transitioning toward Data Science, Machine Learning, Applied AI, Analytics Engineering, and Quality Analytics roles.

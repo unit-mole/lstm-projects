@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Streamlit and secrets
+.streamlit/secrets.toml
+
+# Local data and generated training runs
+data/raw/
+data/private/
+data/uploads/
+models/retrained/
+outputs/runtime/
+logs/
+
+# Large/private text files
+*.txt.bak
+*.docx
+*.pdf
+*.zip
+!data/sample_batch.csv
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

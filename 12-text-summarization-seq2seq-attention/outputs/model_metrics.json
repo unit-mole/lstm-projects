@@ -1,0 +1,26 @@
+{
+  "seq2seq_attention": {
+    "evaluation_scope": "375-example held-out deterministic synthetic test split",
+    "rouge_1_f1": 0.8189333333333334,
+    "rouge_2_f1": 0.7971851851851852,
+    "rouge_l_f1": 0.8189333333333334,
+    "bleu_like_mean_all_375": 0.8079687299613696,
+    "bleu_like_mean_first_150_notebook_scope": 0.8062603918889922,
+    "exact_match_ratio_all_375": 0.12533333333333332,
+    "reference_mean_words": 9.36,
+    "generated_mean_words": 9.36,
+    "exact_match_ratio_first_150_notebook_scope": 0.12666666666666668
+  },
+  "baselines": {
+    "lead_9_token_baseline": {
+      "rouge_1_f1": 0.5829239766081871,
+      "rouge_2_f1": 0.531764705882353,
+      "rouge_l_f1": 0.5829239766081871
+    },
+    "lead_sentence_baseline": {
+      "rouge_1_f1": 0.416,
+      "rouge_2_f1": 0.36660869565217397,
+      "rouge_l_f1": 0.416
+    }
+  }
+}

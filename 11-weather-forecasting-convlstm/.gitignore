@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Generated training artifacts
+logs/
+outputs/retrained_*
+models/*_retrained.keras
+
+# Large or restricted weather data
+data/raw/
+data/private/
+*.nc
+*.grib
+*.grib2
+*.tif
+*.tiff
+
+# Keep bundled portfolio artifacts
+!models/convlstm_weather_forecast.keras
+!data/sample_weather_sequences.npz

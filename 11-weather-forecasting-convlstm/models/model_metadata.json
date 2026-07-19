@@ -1,0 +1,138 @@
+{
+  "project_name": "Weather Forecasting using ConvLSTM",
+  "project_folder": "11-weather-forecasting-convlstm",
+  "task": "next-frame spatiotemporal weather-map forecasting",
+  "data_type": "deterministic synthetic single-channel weather-intensity grids",
+  "target_weather_variable": "normalized synthetic weather / precipitation intensity",
+  "input_frames": 6,
+  "forecast_horizon": 1,
+  "height": 24,
+  "width": 24,
+  "channels": 1,
+  "input_shape": [
+    6,
+    24,
+    24,
+    1
+  ],
+  "output_shape": [
+    24,
+    24,
+    1
+  ],
+  "normalization": {
+    "method": "generator bounded output",
+    "range": [
+      0.0,
+      1.0
+    ]
+  },
+  "seed": 42,
+  "dataset_records": 2200,
+  "split": {
+    "train": 1540,
+    "validation": 330,
+    "test": 330
+  },
+  "bundled_artifact_split_note": "The supplied notebook uses a deterministic seeded sample-level 70/15/15 split. Each synthetic storm sequence is independently generated, so there is no shared global timestamp axis.",
+  "recommended_real_data_split": "Use strictly chronological, non-overlapping train/validation/test periods for real radar, satellite, or gridded meteorological data.",
+  "architecture": [
+    {
+      "class_name": "InputLayer",
+      "name": "input_layer",
+      "filters": null,
+      "kernel_size": null,
+      "return_sequences": null,
+      "activation": null,
+      "padding": null
+    },
+    {
+      "class_name": "ConvLSTM2D",
+      "name": "conv_lstm2d",
+      "filters": 32,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "return_sequences": true,
+      "activation": "tanh",
+      "padding": "same"
+    },
+    {
+      "class_name": "BatchNormalization",
+      "name": "batch_normalization",
+      "filters": null,
+      "kernel_size": null,
+      "return_sequences": null,
+      "activation": null,
+      "padding": null
+    },
+    {
+      "class_name": "ConvLSTM2D",
+      "name": "conv_lstm2d_1",
+      "filters": 32,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "return_sequences": false,
+      "activation": "tanh",
+      "padding": "same"
+    },
+    {
+      "class_name": "BatchNormalization",
+      "name": "batch_normalization_1",
+      "filters": null,
+      "kernel_size": null,
+      "return_sequences": null,
+      "activation": null,
+      "padding": null
+    },
+    {
+      "class_name": "Conv2D",
+      "name": "conv2d",
+      "filters": 16,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "return_sequences": null,
+      "activation": "relu",
+      "padding": "same"
+    },
+    {
+      "class_name": "Conv2D",
+      "name": "conv2d_1",
+      "filters": 1,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "return_sequences": null,
+      "activation": "sigmoid",
+      "padding": "same"
+    }
+  ],
+  "model_parameters": 117025,
+  "optimizer": "Adam(learning_rate=0.001)",
+  "loss": "mean_squared_error",
+  "training_epochs_recorded": 15,
+  "batch_size": 32,
+  "metrics": {
+    "baseline_validation_mae": 0.05418701842427254,
+    "baseline_validation_rmse": 0.08052066713571548,
+    "baseline_test_mae": 0.05417772755026817,
+    "baseline_test_rmse": 0.0804934874176979,
+    "convlstm_validation_mae": 0.02731308899819851,
+    "convlstm_validation_rmse": 0.044109445065259933,
+    "convlstm_test_mae": 0.027280544862151146,
+    "convlstm_test_rmse": 0.04389844089746475,
+    "threshold_iou": 0.6623421311378479,
+    "pixel_accuracy": 0.981623526936027,
+    "threshold": 0.5,
+    "mae_improvement_percent": 49.64619947036499,
+    "rmse_improvement_percent": 45.46336317910248
+  },
+  "responsible_use": "Educational portfolio demonstration only; not an official or safety-critical weather forecasting system.",
+  "created_from_supplied_artifacts": true
+}

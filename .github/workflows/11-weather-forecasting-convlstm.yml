@@ -1,0 +1,62 @@
+name: Project 11 - Weather Forecasting ConvLSTM
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "11-weather-forecasting-convlstm/**"
+      - ".github/workflows/11-weather-forecasting-convlstm.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "11-weather-forecasting-convlstm/**"
+      - ".github/workflows/11-weather-forecasting-convlstm.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality-and-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 11-weather-forecasting-convlstm
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: 11-weather-forecasting-convlstm/requirements-dev.txt
+
+      - name: Install lightweight development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Compile Python source
+        run: python -m compileall app src tests scripts train_model.py
+
+      - name: Run Ruff critical checks
+        run: python -m ruff check app src tests scripts train_model.py --select E9,F63,F7,F82
+
+      - name: Run unit tests
+        run: python -m pytest -q
+
+      - name: Validate required artifacts
+        run: python scripts/validate_project.py
+
+      - name: Validate notebook JSON
+        run: |
+          python - <<'PYCODE'
+          import nbformat
+          from pathlib import Path
+          path = Path("notebooks/weather_forecasting_convlstm.ipynb")
+          notebook = nbformat.read(path, as_version=4)
+          assert len(notebook.cells) >= 10
+          print(f"Validated {path} with {len(notebook.cells)} cells")
+          PYCODE

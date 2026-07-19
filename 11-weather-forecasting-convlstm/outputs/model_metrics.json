@@ -1,0 +1,15 @@
+{
+  "baseline_validation_mae": 0.05418701842427254,
+  "baseline_validation_rmse": 0.08052066713571548,
+  "baseline_test_mae": 0.05417772755026817,
+  "baseline_test_rmse": 0.0804934874176979,
+  "convlstm_validation_mae": 0.02731308899819851,
+  "convlstm_validation_rmse": 0.044109445065259933,
+  "convlstm_test_mae": 0.027280544862151146,
+  "convlstm_test_rmse": 0.04389844089746475,
+  "threshold_iou": 0.6623421311378479,
+  "pixel_accuracy": 0.981623526936027,
+  "threshold": 0.5,
+  "mae_improvement_percent": 49.64619947036499,
+  "rmse_improvement_percent": 45.46336317910248
+}

@@ -20,10 +20,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: video-frame-prediction-convlstm-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   validate-test-and-smoke-test:
     name: Validate, test, and smoke-test model
@@ -84,7 +80,12 @@ jobs:
           assert prediction.shape == expected_shape, (
               f"Unexpected prediction shape: {prediction.shape}; expected {expected_shape}."
           )
-          assert np.isfinite(prediction).all(), "Prediction contains NaN or infinite values."
+          assert np.isfinite(prediction).all(), (
+              "Prediction contains NaN or infinite values."
+          )
 
-          print(f"Saved-model smoke test passed with output shape {prediction.shape}.")
+          print(
+              "Saved-model smoke test passed with output shape "
+              f"{prediction.shape}."
+          )
           PY

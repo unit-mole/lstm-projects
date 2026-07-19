@@ -74,7 +74,7 @@ jobs:
 
       - name: Run automated tests
         run: |
-          pytest tests -q --disable-warnings --maxfail=1
+          python -m pytest tests -q --disable-warnings --maxfail=1
 
       - name: Validate packaged model artifacts
         run: |

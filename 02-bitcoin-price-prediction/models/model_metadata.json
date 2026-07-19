@@ -1,0 +1,66 @@
+{
+  "project": "Bitcoin Price Prediction using LSTM Neural Networks",
+  "status": "portfolio_ready_supplied_model",
+  "original_data_source": "Yahoo Finance via yfinance (BTC-USD)",
+  "original_date_range": [
+    "2018-01-01",
+    "2024-12-31"
+  ],
+  "original_rows_downloaded": 2557,
+  "target_column": "Close",
+  "target_currency": "USD",
+  "feature_columns": [
+    "Close",
+    "SMA_7",
+    "SMA_30",
+    "Return",
+    "Volume"
+  ],
+  "look_back": 30,
+  "forecast_horizons": [
+    1,
+    7,
+    14,
+    30
+  ],
+  "model_architecture": {
+    "lstm_1_units": 128,
+    "dropout": 0.2,
+    "lstm_2_units": 32,
+    "dense_hidden_units": 32,
+    "output_units": 1,
+    "trainable_parameters": 90305
+  },
+  "supplied_notebook_metrics": {
+    "MAE": 1651.0163,
+    "RMSE": 2426.9979,
+    "R2": 0.9845,
+    "MAPE": null
+  },
+  "supplied_notebook_validation_notes": [
+    "The scaler was fitted on the complete feature matrix before splitting.",
+    "The final 20 percent holdout was used both as validation_data and final reported test data.",
+    "The supplied metrics are therefore not a strict untouched-test estimate."
+  ],
+  "packaged_offline_sample": {
+    "type": "deterministic synthetic OHLCV demonstration data",
+    "date_range": [
+      "2023-01-01",
+      "2024-12-31"
+    ],
+    "rows": 731,
+    "purpose": "keep the application functional without an external market-data API",
+    "replay_metrics_final_20_percent": {
+      "MAE": 3602.5713148634486,
+      "RMSE": 4339.405592870303,
+      "MAPE": 3.8110364653754587,
+      "R2": 0.8324495723324785
+    }
+  },
+  "cloud_inference": {
+    "artifact": "bitcoin_lstm_weights.npz",
+    "runtime": "NumPy",
+    "reason": "stable inference without TensorFlow/Keras startup on Streamlit Cloud"
+  },
+  "financial_disclaimer": "Educational portfolio demonstration only; not financial advice."
+}

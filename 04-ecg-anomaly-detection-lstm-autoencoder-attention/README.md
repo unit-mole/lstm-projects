@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Keras](https://img.shields.io/badge/Keras-3.13.2-red.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployment%20Ready-red.svg)](#deployment)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 [![ECG LSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/04-ecg-anomaly-detection-lstm-autoencoder-attention.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/04-ecg-anomaly-detection-lstm-autoencoder-attention.yml)
 
@@ -12,8 +12,9 @@ reconstruction error. The project includes threshold analysis, classification ev
 baseline comparison, temporal focus explainability, cloud-safe NumPy inference, automated tests,
 CI/CD, and an interactive Streamlit application.
 
-**Status:** GitHub-ready and Streamlit-deployment-ready  
-**Live demo:** Deployment link will be added after Streamlit Community Cloud setup  
+**Status:** Portfolio-ready and deployed  
+**Live demo:** [Open the ECG Anomaly Detection application](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)  
 **Primary stack:** Python · Keras · JAX · NumPy · scikit-learn · pandas · Plotly · Streamlit
 
 ---
@@ -92,82 +93,124 @@ This distinction prevents the portfolio from overstating the supplied artifact.
 
 ## Application Preview
 
-After deployment, add four final screenshots under `images/`:
-
-```text
-01_app_overview.png
-02_signal_reconstruction.png
-03_anomaly_distribution_and_results.png
-04_model_performance.png
-```
-
-Suggested README blocks:
-
-```markdown
 ### 1. Application overview
+
+The application overview introduces the ECG anomaly-detection workflow, healthcare disclaimer,
+data-source controls, selected signal, model configuration, reconstruction error, learned
+threshold, and normalized anomaly score. It clearly communicates that the application is an
+educational synthetic-data demonstration rather than a medical diagnostic system.
+
 ![ECG anomaly-detection application overview](images/01_app_overview.png)
 
 ### 2. Original and reconstructed signal
+
+The signal-analysis section compares the selected ECG-like sequence with the LSTM Autoencoder
+reconstruction. It also displays the pointwise absolute reconstruction error, helping users
+understand where the reconstructed signal differs most strongly from the original sequence.
+
 ![Original and reconstructed ECG signal](images/02_signal_reconstruction.png)
 
 ### 3. Reconstruction-error distribution and anomaly results
-![ECG anomaly detection results](images/03_anomaly_distribution_and_results.png)
+
+The dataset-level analysis reports the number of processed signals, flagged anomalies, average
+reconstruction error, and maximum anomaly score. The reconstruction-error distribution is shown
+with the selected threshold, followed by a preview of downloadable anomaly predictions.
+
+![ECG reconstruction-error distribution and anomaly results](images/03_anomaly_distribution_and_results.png)
 
 ### 4. Model-performance dashboard
-![ECG model performance](images/04_model_performance.png)
-```
 
-### Technical Evaluation Artifacts
+The model-performance dashboard reports accuracy, anomaly precision, recall, F1, ROC-AUC, and
+PR-AUC on the held-out synthetic test set. It also includes the confusion matrix, class-specific
+reconstruction-error distribution, baseline comparison, and an explicit warning that the strong
+results do not establish clinical validity.
+
+![ECG anomaly-detection model-performance dashboard](images/04_model_performance.png)
+
+### Detailed Technical Evaluation
 
 #### Synthetic ECG-like signal examples
+
+The synthetic examples illustrate the waveform characteristics used for normal and anomalous
+demonstration signals.
 
 ![ECG signal examples](outputs/ecg_signal_examples.png)
 
 #### Mean normal and anomaly signals
 
+The class-average comparison helps visualize how the generated anomaly distribution differs from
+the synthetic normal-signal distribution.
+
 ![Normal versus anomaly signals](outputs/normal_vs_anomaly_signals.png)
 
 #### Training reconstruction-error distribution
+
+The training-normal reconstruction-error distribution is used to calculate the anomaly threshold.
 
 ![Reconstruction-error distribution](outputs/reconstruction_error_distribution.png)
 
 #### Threshold sensitivity
 
+Threshold sensitivity shows how anomaly precision, recall, and F1 change as the reconstruction-error
+cutoff is adjusted.
+
 ![Threshold sensitivity](outputs/threshold_selection.png)
 
 #### Test reconstruction-error distribution
+
+The held-out test distribution demonstrates the separation between synthetic normal and anomalous
+signals under the supplied model.
 
 ![Anomaly detection results](outputs/anomaly_detection_results.png)
 
 #### Training and validation loss
 
+The loss curve shows how the LSTM Autoencoder reconstruction objective changed during training.
+
 ![LSTM Autoencoder training curve](outputs/training_curve.png)
 
 #### Training and validation MAE
+
+The MAE curve reports the absolute reconstruction error observed during training and validation.
 
 ![LSTM Autoencoder MAE curve](outputs/mae_curve.png)
 
 #### Original versus reconstructed signal
 
+This saved artifact compares an anomalous synthetic signal with the corresponding Autoencoder
+reconstruction.
+
 ![Original versus reconstructed ECG signal](outputs/original_vs_reconstructed.png)
 
 #### Post-hoc temporal focus
+
+The temporal-focus visualization converts pointwise reconstruction errors into normalized focus
+weights. These are post-hoc explainability values and are not trainable model-attention weights.
 
 ![Temporal focus visualization](outputs/temporal_focus_visualization.png)
 
 #### Confusion matrix
 
+The confusion matrix summarizes normal and anomaly predictions on the held-out synthetic test set.
+
 ![ECG anomaly confusion matrix](outputs/confusion_matrix.png)
 
 #### Precision-recall curve
+
+The precision-recall curve emphasizes anomaly-detection performance across decision thresholds.
 
 ![ECG anomaly precision-recall curve](outputs/precision_recall_curve.png)
 
 #### ROC curve
 
+The ROC curve shows the model's ranking performance across reconstruction-error thresholds.
+
 ![ECG anomaly ROC curve](outputs/roc_curve.png)
 
 #### Baseline comparison
+
+The LSTM Autoencoder is compared with a peak-to-peak statistical rule and an Isolation Forest
+baseline using signal-summary features.
 
 ![ECG anomaly baseline comparison](outputs/baseline_comparison.png)
 
@@ -440,6 +483,9 @@ The application supports:
 
 The deployed app loads the pretrained NumPy weights and does not retrain at startup.
 
+**Live application:**  
+[Open the ECG Anomaly Detection application](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)
+
 ---
 
 ## Project Structure
@@ -459,7 +505,10 @@ lstm-projects/
     │   ├── sample_ecg_signals.csv
     │   └── README_data.md
     ├── images/
-    │   └── README.md
+    │   ├── 01_app_overview.png
+    │   ├── 02_signal_reconstruction.png
+    │   ├── 03_anomaly_distribution_and_results.png
+    │   └── 04_model_performance.png
     ├── models/
     │   ├── lstm_autoencoder_ecg.keras
     │   ├── lstm_autoencoder_ecg_weights.npz
@@ -548,16 +597,37 @@ evaluated independently before deployment or comparison with the supplied artifa
 
 ## Deployment
 
-Streamlit Community Cloud is recommended.
+The application is deployed on Streamlit Community Cloud and connected directly to the `main`
+branch of this GitHub repository.
+
+**Live application:**  
+[Open the ECG Anomaly Detection application](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)
+
+**Streamlit entry point:**
+
+```text
+04-ecg-anomaly-detection-lstm-autoencoder-attention/app/streamlit_app.py
+```
+
+**Cloud dependency file:**
+
+```text
+04-ecg-anomaly-detection-lstm-autoencoder-attention/app/requirements.txt
+```
+
+**Deployment configuration:**
 
 ```text
 Repository: unit-mole/lstm-projects
 Branch: main
-Main file path: 04-ecg-anomaly-detection-lstm-autoencoder-attention/app/streamlit_app.py
 Python version: 3.12
 ```
 
-See [`README_HOSTING.md`](README_HOSTING.md) for complete deployment instructions.
+Changes pushed to the relevant Project 04 files on the `main` branch automatically trigger a
+Streamlit application update.
+
+See [`README_HOSTING.md`](README_HOSTING.md) for deployment maintenance and troubleshooting
+instructions.
 
 ---
 
@@ -630,6 +700,10 @@ See [`README_HOSTING.md`](README_HOSTING.md) for complete deployment instruction
 ---
 
 ## Portfolio Description
+
+**Live demonstration**
+
+[Open the deployed ECG Anomaly Detection application](https://lstm-projects-3k2k8kbwyfws9doojmvfwf.streamlit.app/)
 
 **One-line description**
 

@@ -1,0 +1,46 @@
+{
+  "records": 17520,
+  "columns": [
+    "timestamp",
+    "energy_load",
+    "temperature",
+    "humidity",
+    "hour",
+    "dayofweek",
+    "month",
+    "weekend",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos"
+  ],
+  "start_timestamp": "2022-01-01 00:00:00",
+  "end_timestamp": "2023-12-31 23:00:00",
+  "frequency": "hourly",
+  "target": "energy_load",
+  "features": [
+    "energy_load",
+    "temperature",
+    "humidity",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "weekend"
+  ],
+  "missing_by_column": {
+    "timestamp": 0,
+    "energy_load": 0,
+    "temperature": 0,
+    "humidity": 0,
+    "hour": 0,
+    "dayofweek": 0,
+    "month": 0,
+    "weekend": 0,
+    "hour_sin": 0,
+    "hour_cos": 0,
+    "dow_sin": 0,
+    "dow_cos": 0
+  },
+  "duplicate_timestamps": 0
+}

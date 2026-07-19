@@ -1,0 +1,79 @@
+name: 08 - Multivariate Time Series Forecasting - CI
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "08-multivariate-time-series-forecasting-stacked-lstm/**"
+      - ".github/workflows/08-multivariate-time-series-forecasting-stacked-lstm.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "08-multivariate-time-series-forecasting-stacked-lstm/**"
+      - ".github/workflows/08-multivariate-time-series-forecasting-stacked-lstm.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: project-08-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-project:
+    name: Validate Project 08
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: 08-multivariate-time-series-forecasting-stacked-lstm
+
+    env:
+      PYTHONPATH: .
+      PYTHONDONTWRITEBYTECODE: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            08-multivariate-time-series-forecasting-stacked-lstm/requirements.txt
+            08-multivariate-time-series-forecasting-stacked-lstm/requirements-dev.txt
+
+      - name: Install CI dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            "numpy>=1.26,<2.2" \
+            "pandas>=2.2,<3.0" \
+            "scikit-learn>=1.5,<2.0" \
+            "pytest>=8.3,<9.0" \
+            "pytest-cov>=5.0,<7.0" \
+            "ruff>=0.9,<1.0" \
+            "nbformat>=5.10,<6.0"
+
+      - name: Check Python syntax
+        run: python -m compileall -q app src scripts tests train_model.py
+
+      - name: Run critical lint checks
+        run: ruff check app src scripts tests train_model.py --select E9,F63,F7,F82
+
+      - name: Run automated tests
+        run: pytest -q --disable-warnings --maxfail=1
+
+      - name: Validate required project artifacts
+        run: python scripts/validate_project.py
+
+      - name: Validate portfolio notebook
+        run: >-
+          python -c "import nbformat;
+          nbformat.read('notebooks/multivariate_time_series_forecasting_stacked_lstm.ipynb', as_version=4);
+          print('Notebook validation passed.')"

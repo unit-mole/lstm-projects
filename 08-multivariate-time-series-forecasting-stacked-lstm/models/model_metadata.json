@@ -1,0 +1,78 @@
+{
+  "project_name": "Multivariate Time Series Forecasting using Stacked LSTM",
+  "project_folder": "08-multivariate-time-series-forecasting-stacked-lstm",
+  "task_type": "multiple-input single-output regression forecasting",
+  "domain": "synthetic hourly energy demand forecasting",
+  "data_source": "Reproducible synthetic dataset generated from calendar, weather and demand relationships",
+  "timestamp_column": "timestamp",
+  "target_column": "energy_load",
+  "feature_columns": [
+    "energy_load",
+    "temperature",
+    "humidity",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "weekend"
+  ],
+  "frequency": "hourly",
+  "record_count": 17520,
+  "missing_values": 0,
+  "duplicate_timestamps": 0,
+  "sequence_length": 24,
+  "forecast_horizon": 1,
+  "input_shape": [
+    24,
+    8
+  ],
+  "output_shape": [
+    1
+  ],
+  "split": {
+    "train_ratio": 0.7,
+    "validation_ratio": 0.15,
+    "test_ratio": 0.15,
+    "train_rows": 12264,
+    "validation_rows": 2628,
+    "test_rows": 2628,
+    "train_range": [
+      "2022-01-01 00:00:00",
+      "2023-05-26 23:00:00"
+    ],
+    "validation_range": [
+      "2023-05-27 00:00:00",
+      "2023-09-13 11:00:00"
+    ],
+    "test_range": [
+      "2023-09-13 12:00:00",
+      "2023-12-31 23:00:00"
+    ]
+  },
+  "model_architecture": [
+    "Input(24, 8)",
+    "LSTM(64, return_sequences=True)",
+    "Dropout(0.2)",
+    "LSTM(32, return_sequences=True)",
+    "Dropout(0.2)",
+    "LSTM(16)",
+    "Dense(16, activation=relu)",
+    "Dense(1)"
+  ],
+  "model_parameters": 34529,
+  "loss": "mean_squared_error",
+  "optimizer": "Adam(learning_rate=0.001)",
+  "training_callbacks": [
+    "EarlyStopping",
+    "ReduceLROnPlateau"
+  ],
+  "model_file": "models/stacked_lstm_energy.keras",
+  "scaler_file": "models/scalers.json",
+  "artifact_keras_version": "3.13.2",
+  "metrics_file": "outputs/model_metrics.json",
+  "limitations": [
+    "The supplied model was trained on synthetic data and is a portfolio demonstration, not a production utility forecast.",
+    "The trained artifact has a fixed 24-step input window, eight features and one-step output.",
+    "Recursive multi-step forecasts require future temperature and humidity assumptions and accumulate uncertainty."
+  ]
+}

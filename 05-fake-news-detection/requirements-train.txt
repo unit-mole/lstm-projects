@@ -1,0 +1,7 @@
+-r requirements.txt
+scikit-learn>=1.6,<2
+matplotlib>=3.9,<4
+datasets>=4.0,<5
+pyarrow>=18,<25
+jupyter>=1.1,<2
+nbformat>=5.10,<6

@@ -1,0 +1,153 @@
+{
+  "model_name": "LIAR Bidirectional LSTM",
+  "created_on": "2026-07-18",
+  "dataset": "ucsbnlp/liar",
+  "task_scope": "Short English-language political claims; not full-article fact checking",
+  "positive_class": "Fake",
+  "label_mapping": {
+    "pants-fire": 1,
+    "false": 1,
+    "barely-true": 1,
+    "half-true": 0,
+    "mostly-true": 0,
+    "true": 0
+  },
+  "class_names": {
+    "0": "Real",
+    "1": "Fake"
+  },
+  "prediction_threshold": 0.5200000000000002,
+  "baseline_prediction_threshold": 0.5100000000000002,
+  "model_config": {
+    "vocabulary_size": 6638,
+    "embedding_dim": 64,
+    "hidden_dim": 40,
+    "dense_dim": 64,
+    "dropout": 0.35,
+    "padding_index": 0,
+    "bidirectional": true,
+    "pooling": "masked_mean_max"
+  },
+  "tokenizer_config": {
+    "maximum_vocabulary_size": 15000,
+    "minimum_frequency": 2,
+    "maximum_sequence_length": 48,
+    "padding": "post",
+    "truncation": "post"
+  },
+  "training_config": {
+    "epochs_requested": 8,
+    "best_epoch": 6,
+    "batch_size": 256,
+    "learning_rate": 0.0015,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "class_weighting": "positive class weight from training split",
+    "random_seed": 42,
+    "selection_metric": "validation macro-F1 with ROC-AUC tie context"
+  },
+  "dataset_integrity_report": {
+    "train_rows": 10252,
+    "validation_rows": 1279,
+    "test_rows": 1279,
+    "validation_overlap_removed": 5,
+    "test_overlap_removed": 4,
+    "train_class_counts": {
+      "Real": 5764,
+      "Fake": 4488
+    },
+    "validation_class_counts": {
+      "Real": 667,
+      "Fake": 612
+    },
+    "test_class_counts": {
+      "Real": 725,
+      "Fake": 554
+    }
+  },
+  "validation_metrics": {
+    "threshold": 0.5200000000000002,
+    "accuracy": 0.6239249413604379,
+    "balanced_accuracy": 0.6204997991200478,
+    "precision": 0.623352165725047,
+    "recall": 0.5408496732026143,
+    "f1": 0.57917760279965,
+    "macro_f1": 0.6196241370888709,
+    "roc_auc": 0.6547118597563963,
+    "pr_auc": 0.642134345013478,
+    "confusion_matrix": [
+      [
+        467,
+        200
+      ],
+      [
+        281,
+        331
+      ]
+    ]
+  },
+  "test_metrics": {
+    "threshold": 0.5200000000000002,
+    "accuracy": 0.6223612197028929,
+    "balanced_accuracy": 0.6111241130337359,
+    "precision": 0.5692007797270955,
+    "recall": 0.5270758122743683,
+    "f1": 0.5473289597000938,
+    "macro_f1": 0.6116926488641314,
+    "roc_auc": 0.652959043943732,
+    "pr_auc": 0.5935322716467689,
+    "confusion_matrix": [
+      [
+        504,
+        221
+      ],
+      [
+        262,
+        292
+      ]
+    ]
+  },
+  "baseline_validation_metrics": {
+    "threshold": 0.5100000000000002,
+    "accuracy": 0.6270523846755277,
+    "balanced_accuracy": 0.6252498750624688,
+    "precision": 0.616580310880829,
+    "recall": 0.5833333333333334,
+    "f1": 0.5994962216624685,
+    "macro_f1": 0.625278469280393,
+    "roc_auc": 0.6699346405228759,
+    "pr_auc": 0.6487374281350482,
+    "confusion_matrix": [
+      [
+        445,
+        222
+      ],
+      [
+        255,
+        357
+      ]
+    ]
+  },
+  "baseline_test_metrics": {
+    "threshold": 0.5100000000000002,
+    "accuracy": 0.6325254104769351,
+    "balanced_accuracy": 0.622644093115897,
+    "precision": 0.5801526717557252,
+    "recall": 0.5487364620938628,
+    "f1": 0.5640074211502782,
+    "macro_f1": 0.6232199267913554,
+    "roc_auc": 0.6719805801070584,
+    "pr_auc": 0.6049434316307495,
+    "confusion_matrix": [
+      [
+        505,
+        220
+      ],
+      [
+        250,
+        304
+      ]
+    ]
+  },
+  "responsible_use": "Educational portfolio model only. It detects language patterns and is not a fact-checking, source-verification, or evidence-retrieval system."
+}

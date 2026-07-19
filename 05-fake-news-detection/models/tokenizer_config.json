@@ -1,0 +1,7 @@
+{
+  "maximum_vocabulary_size": 15000,
+  "minimum_frequency": 2,
+  "maximum_sequence_length": 48,
+  "padding": "post",
+  "truncation": "post"
+}

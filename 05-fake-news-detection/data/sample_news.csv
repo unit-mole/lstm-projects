@@ -1,0 +1,9 @@
+text,sample_type,notes
+The state added 12000 jobs during the previous fiscal year.,demo_real_prediction,"Selected to demonstrate a Real prediction from the current checkpoint; not a verified factual label."
+The unemployment rate declined by two percentage points last year.,demo_real_prediction,"Selected to demonstrate a Real prediction from the current checkpoint; not a verified factual label."
+Tax revenue increased by five percent according to the annual report.,demo_real_prediction,"Selected to demonstrate a Real prediction from the current checkpoint; not a verified factual label."
+The department spent less money this year than it did last year.,demo_real_prediction,"Selected to demonstrate a Real prediction from the current checkpoint; not a verified factual label."
+SHOCKING secret plan exposed!!! Everyone is hiding what happens tomorrow.,demo_fake_prediction,"Selected to demonstrate a Fake prediction from the current checkpoint; not a verified factual label."
+Scientists confirm one simple fruit instantly reverses every chronic disease.,demo_fake_prediction,"Selected to demonstrate a Fake prediction from the current checkpoint; not a verified factual label."
+The government secretly controls the weather using invisible satellites.,demo_fake_prediction,"Selected to demonstrate a Fake prediction from the current checkpoint; not a verified factual label."
+You will not believe the hidden law that makes taxes completely optional.,demo_fake_prediction,"Selected to demonstrate a Fake prediction from the current checkpoint; not a verified factual label."

@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data and generated training artifacts
+data/raw/
+data/processed/
+models/checkpoints/
+outputs/tmp/
+
+# Secrets and local configuration
+.env
+.streamlit/secrets.toml
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Legacy artifacts are retained in the delivery ZIP only; do not publish by default
+legacy_original/*.h5
+legacy_original/*.pkl

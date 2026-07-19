@@ -1,0 +1,22 @@
+{
+  "original_notebook.ipynb": {
+    "size_bytes": 193513,
+    "sha256": "4bc0a9ffe14ce7f2b7f7877bae6e3cb97c0fb819975e6d753d862f22087d06ae",
+    "public_inference_used": false
+  },
+  "fake_news_lstm.h5": {
+    "size_bytes": 5916080,
+    "sha256": "62d51e2e2c47ac7cfe60db83774997b92754feb3e28d4efc8460cea1bc460d1f",
+    "public_inference_used": false
+  },
+  "fake_news_tokenizer.pkl": {
+    "size_bytes": 514617,
+    "sha256": "2fd0cc3e23eb63ffb095edc22e7c6ff1035e9696b9bc57d9ee47881dd673753f",
+    "public_inference_used": false
+  },
+  "fake_news_label_encoder.pkl": {
+    "size_bytes": 256,
+    "sha256": "e763b3d1d5215cd199d0883572371131f45795a802c249555b4c98b2a93a8e8f",
+    "public_inference_used": false
+  }
+}

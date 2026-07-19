@@ -1,0 +1,51 @@
+{
+  "project": "Conversational Chatbot using Seq2Seq with Attention",
+  "artifact_origin": "Supplied notebook and trained Keras artifacts",
+  "dataset_type": "Synthetic, privacy-safe, deterministic dialogue pairs",
+  "generated_rows": 3500,
+  "unique_pairs": 20,
+  "split_rows": {
+    "train": 2450,
+    "validation": 525,
+    "test": 525
+  },
+  "unique_pair_overlap": {
+    "train_unique_pairs": 20,
+    "validation_unique_pairs": 20,
+    "test_unique_pairs": 20,
+    "all_20_pairs_present_in_each_split": true
+  },
+  "source_vocab_size": 45,
+  "target_vocab_size": 81,
+  "max_source_length": 5,
+  "max_target_length": 10,
+  "embedding_dim": 128,
+  "latent_dim": 128,
+  "parameter_count": 300241,
+  "architecture": [
+    "Source embedding",
+    "Encoder LSTM",
+    "Target embedding",
+    "Decoder LSTM",
+    "Additive attention",
+    "Context concatenation",
+    "Time-distributed softmax"
+  ],
+  "supplied_metrics": {
+    "validation_bleu_like": 1.0,
+    "test_bleu_like": 1.0,
+    "exact_match_ratio": 1.0,
+    "final_train_loss": 0.0079,
+    "final_validation_loss": 0.0071,
+    "final_train_token_accuracy": 1.0,
+    "final_validation_token_accuracy": 1.0
+  },
+  "evaluation_qualification": "The supplied random row split contains all 20 exact dialogue pairs in training, validation, and test sets. Perfect metrics therefore measure memorization of repeated templates rather than generalization to unseen intents or phrasings.",
+  "cloud_inference": "NumPy implementation matching the supplied encoder, decoder, attention, and softmax weights",
+  "responsible_use": "Educational portfolio demonstration only. Do not enter sensitive information or use responses for medical, legal, financial, safety-critical, or production support decisions.",
+  "numpy_keras_compatibility": {
+    "verified_on_sample_prompt": "hello",
+    "maximum_encoder_absolute_difference": 1.8e-07,
+    "maximum_decoder_probability_absolute_difference": 1.2e-07
+  }
+}

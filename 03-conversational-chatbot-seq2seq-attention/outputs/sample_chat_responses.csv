@@ -1,0 +1,21 @@
+user_input,reference_response,predicted_response,displayed_response,average_token_confidence,oov_ratio,exact_match,retrieval_response,retrieval_similarity
+hello,hi there,hi there,hi there,0.9924706816673279,0.0,True,hi there,1.0
+how are you,i am doing well,i am doing well,i am doing well,0.9926984310150146,0.0,True,i am doing well,1.0
+what is your name,i am your virtual assistant,i am your virtual assistant,i am your virtual assistant,0.9927622079849243,0.0,True,i am your virtual assistant,1.0
+can you help me,yes i can help you,yes i can help you,yes i can help you,0.9922959446907044,0.0,True,yes i can help you,1.0
+tell me about the project,the project is moving forward on schedule,the project is moving forward on schedule,the project is moving forward on schedule,0.9906480738094875,0.0,True,the project is moving forward on schedule,1.0
+what time is the meeting,the meeting is scheduled for tomorrow morning,the meeting is scheduled for tomorrow morning,the meeting is scheduled for tomorrow morning,0.9914656707218715,0.0,True,the meeting is scheduled for tomorrow morning,1.0
+i need support,i can guide you through the next steps,i can guide you through the next steps,i can guide you through the next steps,0.9920179396867752,0.0,True,i can guide you through the next steps,1.0
+thank you,you are welcome,you are welcome,you are welcome,0.9935710628827413,0.0,True,you are welcome,1.0
+good morning,good morning how can i help,good morning how can i help,good morning how can i help,0.9911542534828186,0.0,True,good morning how can i help,1.0
+goodbye,goodbye have a nice day,goodbye have a nice day,goodbye have a nice day,0.9895060300827027,0.0,True,goodbye have a nice day,1.0
+what is the status,the current status looks stable,the current status looks stable,the current status looks stable,0.9919114828109741,0.0,True,the current status looks stable,1.0
+can you summarize this,yes i can provide a short summary,yes i can provide a short summary,yes i can provide a short summary,0.9912751913070679,0.0,True,yes i can provide a short summary,1.0
+i am confused,let me explain it more clearly,let me explain it more clearly,let me explain it more clearly,0.9868849416573843,0.0,True,let me explain it more clearly,1.0
+what should i do next,you should review the latest update,you should review the latest update,you should review the latest update,0.9907326797644297,0.0,True,you should review the latest update,1.0
+is the report ready,the report is almost ready,the report is almost ready,the report is almost ready,0.9942997574806214,0.0,True,the report is almost ready,1.0
+do we have a deadline,yes the deadline is next week,yes the deadline is next week,yes the deadline is next week,0.9921260178089142,0.0,True,yes the deadline is next week,1.0
+can you explain the issue,the issue is related to missing information,the issue is related to missing information,the issue is related to missing information,0.9919904300144741,0.0,True,the issue is related to missing information,1.0
+what do you recommend,i recommend starting with the most urgent task,i recommend starting with the most urgent task,i recommend starting with the most urgent task,0.9914554730057716,0.0,True,i recommend starting with the most urgent task,1.0
+how can i improve,focus on consistency and practice,focus on consistency and practice,focus on consistency and practice,0.99199138879776,0.0,True,focus on consistency and practice,1.0
+are you available,yes i am available now,yes i am available now,yes i am available now,0.9920621514320374,0.0,True,yes i am available now,1.0

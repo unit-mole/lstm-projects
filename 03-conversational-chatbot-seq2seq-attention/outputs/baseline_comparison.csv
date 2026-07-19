@@ -1,0 +1,4 @@
+approach,canonical_exact_match,generates_new_text,important_limitation
+Most frequent response,0.05,False,Always repeats one response
+Nearest-prompt retrieval,1.0,False,Reuses stored responses
+Seq2Seq with attention,1.0,True,Perfect score reflects repeated-template overlap

@@ -1,0 +1,15 @@
+{
+  "src_vocab_size": 45,
+  "tgt_vocab_size": 81,
+  "max_src_len": 5,
+  "max_tgt_len": 10,
+  "seed": 42,
+  "start_token": "sostok",
+  "end_token": "eostok",
+  "start_token_id": 2,
+  "end_token_id": 3,
+  "embedding_dim": 128,
+  "latent_dim": 128,
+  "parameter_count": 300241,
+  "cleaning_rule": "lowercase; keep ASCII letters, digits, and whitespace"
+}

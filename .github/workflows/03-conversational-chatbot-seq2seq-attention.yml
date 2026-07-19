@@ -1,0 +1,49 @@
+name: Seq2Seq Attention Chatbot CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "03-conversational-chatbot-seq2seq-attention/**"
+      - ".github/workflows/03-conversational-chatbot-seq2seq-attention.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "03-conversational-chatbot-seq2seq-attention/**"
+      - ".github/workflows/03-conversational-chatbot-seq2seq-attention.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 03-conversational-chatbot-seq2seq-attention
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: 03-conversational-chatbot-seq2seq-attention/requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Validate project artifacts
+        run: python scripts/validate_project.py
+
+      - name: Run automated tests
+        run: python -m pytest -q
+
+      - name: Compile Python files
+        run: python -m compileall -q app src scripts tests train_model.py

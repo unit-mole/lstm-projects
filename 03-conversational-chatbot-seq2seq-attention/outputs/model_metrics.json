@@ -1,0 +1,29 @@
+{
+  "supplied_notebook": {
+    "validation_bleu_like": 1.0,
+    "test_bleu_like": 1.0,
+    "exact_match_ratio": 1.0,
+    "final_train_loss": 0.0079,
+    "final_validation_loss": 0.0071,
+    "final_train_token_accuracy": 1.0,
+    "final_validation_token_accuracy": 1.0
+  },
+  "canonical_prompt_replay": {
+    "bleu_like_mean": 1.0,
+    "exact_match_ratio": 1.0,
+    "average_reference_length": 5.6,
+    "average_predicted_length": 5.6,
+    "average_token_confidence": 0.9916659905051903,
+    "minimum_token_confidence": 0.9868849416573843,
+    "prompt_count": 20
+  },
+  "dataset": {
+    "generated_rows": 3500,
+    "unique_pairs": 20,
+    "train_rows": 2450,
+    "validation_rows": 525,
+    "test_rows": 525,
+    "exact_pair_overlap_across_all_splits": 20
+  },
+  "qualification": "The supplied random row split contains all 20 exact dialogue pairs in training, validation, and test sets. Perfect metrics therefore measure memorization of repeated templates rather than generalization to unseen intents or phrasings."
+}

@@ -1,10 +1,10 @@
 # LSTM Projects
 
 A structured portfolio of end-to-end Long Short-Term Memory projects covering time-series
-forecasting, sequence modeling, anomaly detection, attention mechanisms, Seq2Seq systems, natural
-language processing, and ConvLSTM applications.
+forecasting, financial sequence modeling, conversational AI, anomaly detection, attention
+mechanisms, Seq2Seq systems, natural language processing, and ConvLSTM applications.
 
-**Portfolio status:** 1 deployed project and 1 additional deployment-ready project  
+**Portfolio status:** 2 deployed projects and 1 additional deployment-ready project  
 **Repository owner:** [Anmol Tripathi](https://github.com/unit-mole)
 
 ---
@@ -12,25 +12,24 @@ language processing, and ConvLSTM applications.
 ## Portfolio Objective
 
 This repository demonstrates how Long Short-Term Memory networks and related sequence-modeling
-architectures can be applied to practical forecasting, anomaly-detection, natural-language-
-processing, and spatiotemporal problems.
+architectures can be applied to practical forecasting, conversational AI, anomaly detection,
+classification, generation, and spatiotemporal problems.
 
-Each completed project is developed as an end-to-end case study containing:
+Each completed project includes:
 
 - a clearly defined business or analytical problem;
-- reproducible data preparation and feature engineering;
-- sequence-window generation appropriate to the problem;
+- reproducible preprocessing and sequence construction;
 - leakage-aware training, validation, and test design;
+- saved model and preprocessing artifacts;
+- reusable prediction, forecasting, or generation code;
 - task-appropriate baseline comparison and evaluation;
-- saved preprocessing and model artifacts;
-- modular and reusable inference code;
 - an interactive Streamlit demonstration where appropriate;
 - automated tests and project-specific GitHub Actions CI;
 - local execution and deployment guidance;
-- an honest discussion of assumptions, limitations, and future improvements.
+- transparent assumptions, limitations, and responsible-use notes.
 
-The portfolio is designed to demonstrate skills relevant to Data Science, Machine Learning, Applied
-AI, Data Analytics, Quality Analytics, Business Intelligence, and Analytics Engineering roles.
+The portfolio supports career positioning across Data Science, Machine Learning, Applied AI,
+Data Analytics, Quality Analytics, Business Intelligence, and Analytics Engineering.
 
 ---
 
@@ -38,10 +37,11 @@ AI, Data Analytics, Quality Analytics, Business Intelligence, and Analytics Engi
 
 | No. | Project | Problem Type | Status |
 |---:|---|---|---|
-| 1 | [Airline Passenger Forecasting](01-airline-passenger-forecasting/) | Time-series regression and passenger-demand forecasting | [Live Demo](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/) |
-| 2 | [Bitcoin Price Prediction](02-bitcoin-price-prediction/) | Cryptocurrency time-series forecasting | Streamlit deployment pending |
+| 1 | [Airline Passenger Forecasting](01-airline-passenger-forecasting/) | Passenger-demand time-series forecasting | [Live Demo](https://lstm-projects-qtuxsozwu2g7kp6lpeuclq.streamlit.app/) |
+| 2 | [Bitcoin Price Prediction](02-bitcoin-price-prediction/) | Cryptocurrency time-series forecasting | [Live Demo](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/) |
+| 3 | [Conversational Chatbot using Seq2Seq with Attention](03-conversational-chatbot-seq2seq-attention/) | NLP response generation and conversational AI | Streamlit deployment pending |
 
-New project folders and workflow files are added only when each project is developed and validated.
+New folders and workflows are added only when each project is developed and validated.
 
 ---
 
@@ -49,26 +49,20 @@ New project folders and workflow files are added only when each project is devel
 
 ### Airline Passenger Forecasting
 
-The first project demonstrates seasonality-aware monthly passenger-demand forecasting, chronological
-validation, training-only scaling, baseline comparison, recursive multi-month prediction, testing,
-and Streamlit deployment.
+Seasonality-aware monthly forecasting, chronological validation, baseline comparison, recursive
+multi-month prediction, testing, and Streamlit deployment.
 
 ### Bitcoin Price Prediction
 
-The second project demonstrates:
+Daily OHLCV preprocessing, financial feature engineering, stacked-LSTM inference, recursive
+multi-day forecasts, volatility analysis, baseline comparison, responsible financial communication,
+testing, and Streamlit deployment.
 
-- daily OHLCV cryptocurrency preprocessing;
-- 7-day and 30-day moving averages;
-- daily return and volatility analysis;
-- 30-day multivariate LSTM sequences;
-- stacked LSTM inference;
-- recursive 1-, 7-, 14-, and 30-day forecasting;
-- comparison with naive, moving-average, and linear-trend baselines;
-- backend-free NumPy cloud inference;
-- optional recent `BTC-USD` retrieval with an offline fallback;
-- responsible financial-model communication.
+### Conversational Chatbot using Seq2Seq with Attention
 
-> The Bitcoin project is an educational machine-learning demonstration and is not financial advice.
+Text preprocessing, source and target tokenization, teacher forcing, encoder-decoder LSTMs,
+additive attention, greedy generation, token confidence, attention visualization, retrieval
+baseline, responsible fallback behavior, testing, and deployment-ready Streamlit chat.
 
 ---
 
@@ -77,8 +71,8 @@ The second project demonstrates:
 | No. | Project | Primary Modeling Area | Status |
 |---:|---|---|---|
 | 1 | Airline Passenger Forecasting | Time-series demand forecasting | Deployed |
-| 2 | Bitcoin Price Prediction | Financial time-series forecasting | Deployment-ready |
-| 3 | Conversational Chatbot using Seq2Seq with Attention | Conversational AI | Planned |
+| 2 | Bitcoin Price Prediction | Financial time-series forecasting | Deployed |
+| 3 | Conversational Chatbot using Seq2Seq with Attention | Conversational AI | Deployment-ready |
 | 4 | ECG Anomaly Detection using LSTM Autoencoder | Healthcare anomaly detection | Planned |
 | 5 | Fake News Detection | NLP sequence classification | Planned |
 | 6 | Human Activity Recognition using LSTM with Attention | Sensor sequence classification | Planned |
@@ -97,63 +91,51 @@ The second project demonstrates:
 
 ### End-to-End Machine Learning Delivery
 
-Every completed project is structured to move beyond notebook-only experimentation:
-
-- business-problem definition;
+- problem definition and scope;
 - reproducible data preparation;
-- feature and sequence engineering;
-- training, validation, and test separation;
-- LSTM-based model development;
-- baseline comparison and evaluation;
+- feature, token, and sequence engineering;
+- model development and evaluation;
 - saved preprocessing and model artifacts;
-- reusable forecasting pipelines;
-- interactive inference;
-- downloadable outputs;
-- local execution and cloud deployment.
+- reusable forecasting and generation pipelines;
+- cloud-safe inference;
+- interactive Streamlit applications;
+- automated testing and GitHub Actions;
+- responsible communication of limitations.
 
-### Correct Sequential Validation
+### Correct Validation and Leakage Awareness
 
-The repository emphasizes chronological splitting, training-only preprocessing, consistent sequence
-construction, validation-based selection, untouched final test evaluation where applicable, and
-explicit documentation of leakage risks in supplied legacy artifacts.
+The repository emphasizes chronological forecasting splits, training-only preprocessing, duplicate
+overlap analysis, unique-pair grouping for dialogue retraining, and honest qualification of supplied
+legacy metrics.
 
 ### Problem-Appropriate Evaluation
 
-Current projects use MAE, RMSE, MAPE, R², residual analysis, training curves, and transparent
-baseline comparisons. Future classification, anomaly-detection, Seq2Seq, and ConvLSTM projects will
-add metrics appropriate to their tasks.
-
-### Reliable and Reusable Engineering
-
-Projects use modular source files, saved model metadata, safe input validation, automated tests,
-project-specific GitHub Actions workflows, cloud-friendly inference, and GitHub-safe artifact
-management.
+Forecasting projects use MAE, RMSE, MAPE, R², residual analysis, and baseline comparison.
+Conversational generation uses token loss, token accuracy, BLEU-like scoring, exact match,
+generated examples, attention inspection, and retrieval comparison.
 
 ### Responsible Model Communication
 
-Every project documents intended scope and limitations. Financial, operational, healthcare, and
-language-model outputs are not presented as production decisions without additional validation,
-governance, monitoring, security, and human oversight.
+Financial predictions are not investment advice. Chatbot responses are not reliable high-stakes or
+production-support outputs. Every project documents scope, human oversight, and future validation.
 
 ---
 
 ## Repository Convention
-
-The repository is organized as a monorepo. Each completed project is self-contained:
 
 ```text
 lstm-projects/
 ├── .github/
 │   └── workflows/
 │       ├── 01-airline-passenger-forecasting.yml
-│       └── 02-bitcoin-price-prediction.yml
+│       ├── 02-bitcoin-price-prediction.yml
+│       └── 03-conversational-chatbot-seq2seq-attention.yml
 ├── .streamlit/
 │   └── config.toml
 ├── 01-airline-passenger-forecasting/
 ├── 02-bitcoin-price-prediction/
+├── 03-conversational-chatbot-seq2seq-attention/
 │   ├── app/
-│   │   ├── streamlit_app.py
-│   │   └── requirements.txt
 │   ├── data/
 │   ├── images/
 │   ├── models/
@@ -165,15 +147,14 @@ lstm-projects/
 │   ├── README.md
 │   ├── README_HOSTING.md
 │   ├── requirements.txt
-│   ├── requirements-dev.txt
-│   └── train_model.py
+│   └── requirements-dev.txt
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
 
-Each project maintains separate dependencies because forecasting, NLP, anomaly detection, and
-spatiotemporal projects may require different libraries and deployment configurations.
+Each project is self-contained because forecasting, NLP, anomaly detection, and ConvLSTM systems
+require different dependencies, artifacts, and deployment configurations.
 
 ---
 
@@ -181,32 +162,36 @@ spatiotemporal projects may require different libraries and deployment configura
 
 | Area | Demonstrated Through |
 |---|---|
-| Passenger-demand forecasting | Airline Passenger Forecasting |
+| Monthly demand forecasting | Airline Passenger Forecasting |
 | Cryptocurrency forecasting | Bitcoin Price Prediction |
-| Monthly and daily time-series preparation | Projects 01 and 02 |
-| Sequence-window generation | LSTM forecasting pipelines |
-| Seasonal feature engineering | Airline Passenger Forecasting |
-| OHLCV and financial feature engineering | Bitcoin Price Prediction |
-| Chronological validation | Both completed projects |
-| Leakage prevention and documentation | Training-only pipelines and supplied-artifact audits |
-| Recursive forecasting | Multi-month airline and multi-day Bitcoin forecasts |
-| Baseline comparison | Naive and task-specific benchmarks |
-| Regression evaluation | MAE, RMSE, MAPE, R², and residual analysis |
-| Interactive inference | Streamlit applications |
-| Testing and CI/CD | pytest and project-specific GitHub Actions workflows |
+| Conversational response generation | Seq2Seq Attention Chatbot |
+| Chronological validation | Projects 01 and 02 |
+| Dialogue pair leakage analysis | Project 03 |
+| Feature engineering | Seasonal, OHLCV, return, and volatility features |
+| Text preprocessing | Cleaning, OOV handling, and sequence padding |
+| Encoder-decoder LSTMs | Project 03 |
+| Additive attention | Project 03 |
+| Recursive forecasting | Projects 01 and 02 |
+| Greedy token decoding | Project 03 |
+| Regression evaluation | MAE, RMSE, MAPE, R², and residuals |
+| Generation evaluation | Loss, token accuracy, BLEU-like, exact match, and examples |
+| Baseline comparison | Forecasting and conversational baselines |
+| Interactive inference | Three Streamlit applications |
+| Testing and CI/CD | pytest and project-specific GitHub Actions |
 
 ---
 
 ## Core Skills Demonstrated
 
 `Long Short-Term Memory Networks` · `Recurrent Neural Networks` · `Sequence Modeling` ·
-`Time-Series Forecasting` · `Demand Forecasting` · `Financial Time-Series Analysis` ·
-`OHLCV Data Processing` · `Feature Engineering` · `Moving Averages` · `Return Analysis` ·
-`Volatility Analysis` · `Sequence Generation` · `Chronological Validation` ·
-`Leakage Prevention` · `Recursive Forecasting` · `Baseline Comparison` ·
-`Regression Evaluation` · `Residual Analysis` · `Keras` · `JAX` · `NumPy` ·
-`scikit-learn` · `pandas` · `Plotly` · `Streamlit` · `Testing` · `GitHub Actions` ·
-`CI/CD` · `Business Translation` · `Responsible Financial Communication`
+`Time-Series Forecasting` · `Financial Forecasting` · `Natural Language Processing` ·
+`Seq2Seq` · `Encoder-Decoder Architecture` · `Additive Attention` · `Teacher Forcing` ·
+`Text Preprocessing` · `Tokenization` · `Vocabulary Management` · `Sequence Padding` ·
+`Greedy Decoding` · `Text Generation` · `Attention Visualization` · `Feature Engineering` ·
+`Chronological Validation` · `Leakage Analysis` · `Recursive Forecasting` ·
+`Baseline Comparison` · `Regression Evaluation` · `Generation Evaluation` ·
+`Keras` · `JAX` · `NumPy` · `scikit-learn` · `pandas` · `Plotly` · `Streamlit` ·
+`Testing` · `GitHub Actions` · `CI/CD` · `Responsible AI Communication`
 
 ---
 

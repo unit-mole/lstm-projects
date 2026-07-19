@@ -1,0 +1,13 @@
+{
+    "seq_len": 80,
+    "n_features": 6,
+    "class_names": [
+        "walking",
+        "walking_upstairs",
+        "walking_downstairs",
+        "sitting",
+        "standing",
+        "laying"
+    ],
+    "seed": 42
+}

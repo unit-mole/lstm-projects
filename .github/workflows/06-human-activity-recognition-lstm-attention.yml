@@ -1,0 +1,20 @@
+name: HAR LSTM Attention CI
+on:
+  push:
+    paths:
+      - "06-human-activity-recognition-lstm-attention/**"
+      - ".github/workflows/06-human-activity-recognition-lstm-attention.yml"
+  pull_request:
+    paths:
+      - "06-human-activity-recognition-lstm-attention/**"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy pandas pytest
+      - run: pytest -q
+        working-directory: 06-human-activity-recognition-lstm-attention

@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Keras](https://img.shields.io/badge/Keras-3.13.2-red.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployment%20Ready-red.svg)](#deployment)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 [![Chatbot CI](https://github.com/unit-mole/lstm-projects/actions/workflows/03-conversational-chatbot-seq2seq-attention.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/03-conversational-chatbot-seq2seq-attention.yml)
 
@@ -12,8 +12,9 @@ teacher-forcing data preparation, separate encoder and decoder inference, greedy
 attention visualization, baseline comparison, responsible fallback behavior, testing, CI/CD,
 and a Streamlit chat application.
 
-**Status:** GitHub-ready and Streamlit-deployment-ready  
-**Live demo:** Deployment link will be added after Streamlit Community Cloud setup  
+**Status:** Portfolio-ready and deployed  
+**Live demo:** [Open the Conversational Chatbot application](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)  
 **Primary stack:** Python · Keras · JAX · NumPy · pandas · scikit-learn · Plotly · Streamlit
 
 ---
@@ -70,50 +71,73 @@ The application provides:
 
 ## Application Preview
 
-Add final deployed screenshots under `images/` using:
-
-```text
-01_app_overview.png
-02_chat_response.png
-03_attention_visualization.png
-04_model_performance.png
-```
-
-Suggested README blocks:
-
-```markdown
 ### 1. Application overview
-![Chatbot application overview](images/01_app_overview.png)
+
+The application overview introduces the Seq2Seq chatbot, responsible-use guidance, sample-prompt
+controls, message input, and key model details. The sidebar summarizes the source and target
+vocabulary sizes, maximum sequence lengths, and total model parameters.
+
+![Conversational Chatbot application overview](images/01_app_overview.png)
 
 ### 2. Chat response and conversation history
-![Seq2Seq chatbot response](images/02_chat_response.png)
+
+Users can enter a short message or select a sample prompt, submit it to the encoder-decoder model,
+and review the generated response in a chat-style interface. The application also reports average
+selected-token confidence, out-of-vocabulary ratio, generated-token count, and whether a safety
+fallback was used.
+
+![Seq2Seq chatbot response and conversation history](images/02_chat_response.png)
 
 ### 3. Attention and decoding analysis
-![Attention visualization](images/03_attention_visualization.png)
+
+The decoding-analysis section shows the probability selected for each generated token and an
+additive-attention heatmap. The heatmap connects generated response tokens with encoder input
+positions, helping explain which parts of the input were emphasized at each decoder step.
+
+![Seq2Seq attention and decoding analysis](images/03_attention_visualization.png)
 
 ### 4. Model-performance dashboard
-![Chatbot model performance](images/04_model_performance.png)
-```
 
-### Technical Evaluation Artifacts
+The model-performance dashboard reports the supplied BLEU-like score, exact-match result,
+validation loss, canonical-prompt replay metrics, and average decoder confidence. It also displays
+the critical evaluation warning that the perfect supplied scores reflect repeated-template overlap
+rather than generalization to unseen conversations.
+
+![Seq2Seq chatbot model-performance dashboard](images/04_model_performance.png)
+
+### Detailed Technical Evaluation
 
 #### Training and validation loss
 
-![Seq2Seq training curve](outputs/training_curve.png)
+The loss curve shows how sparse categorical cross-entropy changed during training and validation.
+It helps assess model convergence and whether validation performance began to deteriorate.
+
+![Seq2Seq training and validation loss](outputs/training_curve.png)
 
 #### Token accuracy
+
+The token-accuracy curve compares training and validation token prediction accuracy across epochs.
 
 ![Seq2Seq token accuracy](outputs/token_accuracy_curve.png)
 
 #### Attention visualization
 
+The saved attention artifact presents a reproducible example of how decoder steps distribute
+attention across the encoder input positions.
+
 ![Additive attention visualization](outputs/attention_visualization.png)
 
 #### Response-length comparison
 
+The response-length comparison checks whether generated responses reproduce the approximate length
+of their reference responses.
+
 ![Reference versus predicted response length](outputs/response_length_comparison.png)
 
 #### Baseline comparison
+
+The chatbot is compared with simple most-frequent-response and nearest-prompt retrieval baselines.
+This demonstrates the difference between fixed response reuse and token-by-token neural generation.
 
 ![Chatbot baseline comparison](outputs/baseline_comparison.png)
 
@@ -302,6 +326,9 @@ The app supports:
 
 The deployed app loads pretrained NumPy weights and does not retrain at startup.
 
+**Live application:**  
+[Open the Conversational Chatbot application](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)
+
 ---
 
 ## Project Structure
@@ -322,7 +349,10 @@ lstm-projects/
     │   ├── sample_prompts.json
     │   └── README_data.md
     ├── images/
-    │   └── README.md
+    │   ├── 01_app_overview.png
+    │   ├── 02_chat_response.png
+    │   ├── 03_attention_visualization.png
+    │   └── 04_model_performance.png
     ├── models/
     │   ├── seq2seq_chatbot.keras
     │   ├── encoder_chatbot.keras
@@ -399,16 +429,37 @@ A larger and more diverse permitted conversation corpus is strongly recommended.
 
 ## Deployment
 
-Streamlit Community Cloud settings:
+The application is deployed on Streamlit Community Cloud and connected directly to the `main`
+branch of this GitHub repository.
+
+**Live application:**  
+[Open the Conversational Chatbot application](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)
+
+**Streamlit entry point:**
+
+```text
+03-conversational-chatbot-seq2seq-attention/app/streamlit_app.py
+```
+
+**Cloud dependency file:**
+
+```text
+03-conversational-chatbot-seq2seq-attention/app/requirements.txt
+```
+
+**Deployment configuration:**
 
 ```text
 Repository: unit-mole/lstm-projects
 Branch: main
-Main file path: 03-conversational-chatbot-seq2seq-attention/app/streamlit_app.py
 Python version: 3.12
 ```
 
-See [`README_HOSTING.md`](README_HOSTING.md).
+Changes pushed to the relevant Project 03 files on the `main` branch automatically trigger a
+Streamlit application update.
+
+See [`README_HOSTING.md`](README_HOSTING.md) for deployment maintenance and troubleshooting
+instructions.
 
 ---
 
@@ -472,6 +523,10 @@ See [`README_HOSTING.md`](README_HOSTING.md).
 ---
 
 ## Portfolio Description
+
+**Live demonstration**
+
+[Open the deployed Streamlit chatbot](https://lstm-projects-s6ttobrjhi6uyvgwvyygnm.streamlit.app/)
 
 **One-line description**
 

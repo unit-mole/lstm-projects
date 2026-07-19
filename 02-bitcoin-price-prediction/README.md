@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Keras](https://img.shields.io/badge/Keras-3.13.2-red.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployment%20Ready-red.svg)](#deployment)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 [![Bitcoin LSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/02-bitcoin-price-prediction.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/02-bitcoin-price-prediction.yml)
 
@@ -12,8 +12,9 @@ sequences. The project includes chronological preprocessing, pretrained inferenc
 multi-step forecasting, baseline utilities, residual and volatility analysis, testing, CI/CD,
 downloadable outputs, and an interactive Streamlit application.
 
-**Status:** GitHub-ready and Streamlit-deployment-ready  
-**Live demo:** Deployment link will be added after Streamlit Community Cloud setup  
+**Status:** Portfolio-ready and deployed  
+**Live demo:** [Open the Bitcoin Price Prediction application](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)  
 **Primary stack:** Python · Keras · JAX · NumPy · scikit-learn · pandas · Plotly · Streamlit
 
 ---
@@ -72,56 +73,97 @@ The application provides:
 
 ## Application Preview
 
-Add the final deployed screenshots under `images/` using:
-
-```text
-01_app_overview.png
-02_market_analysis.png
-03_future_forecast.png
-04_model_performance.png
-```
-
-Suggested README blocks after screenshots are captured:
-
-```markdown
 ### 1. Application overview
-![Bitcoin application overview](images/01_app_overview.png)
 
-### 2. Market trend and volatility analysis
-![Bitcoin market analysis](images/02_market_analysis.png)
+The application overview presents the cryptocurrency forecasting objective, selected data source,
+forecast horizon, LSTM input configuration, key forecast summary, and the required financial
+disclaimer. Users can work with the packaged offline dataset, upload a compatible CSV file, or use
+optional recent `BTC-USD` data when network access is available.
 
-### 3. Future price forecast
-![Bitcoin future forecast](images/03_future_forecast.png)
+![Bitcoin Price Prediction application overview](images/01_app_overview.png)
+
+### 2. Historical price trend and volatility
+
+The market-analysis section visualizes historical Bitcoin closing prices, the 7-day and 30-day
+moving averages, daily returns, and rolling volatility. These views help explain recent trend,
+momentum, variability, and the market behavior represented in the model inputs.
+
+![Bitcoin price trend and volatility analysis](images/02_price_trend_and_volatility.png)
+
+### 3. Future Bitcoin price forecast
+
+Users can generate recursive forecasts for 1, 7, 14, or 30 days. The forecast section combines
+recent historical prices with future LSTM predictions and reports the expected direction, average
+forecast, ending forecast, and downloadable daily forecast values.
+
+![Future Bitcoin price forecast](images/03_future_bitcoin_forecast.png)
 
 ### 4. Model-performance dashboard
-![Bitcoin model performance](images/04_model_performance.png)
-```
 
-### Technical evaluation artifacts
+The model-performance dashboard reports the supplied notebook metrics and selected-data replay
+diagnostics. It provides a concise application-level summary before the supporting technical
+evaluation plots.
+
+![Bitcoin LSTM model-performance dashboard](images/04_model_performance.png)
+
+### Detailed Technical Evaluation
 
 #### Closing-price trend
 
-![Bitcoin price trend](outputs/bitcoin_price_trend.png)
+The historical closing-price chart provides context for the long-term growth, drawdowns, regime
+changes, and volatility present in the Bitcoin series.
 
-#### Actual versus predicted close
+![Bitcoin closing-price trend](outputs/bitcoin_price_trend.png)
 
-![Actual versus predicted Bitcoin close](outputs/actual_vs_predicted.png)
+#### Rolling-average analysis
+
+The 7-day and 30-day moving averages summarize short- and medium-term trend behavior and are included
+among the packaged LSTM model inputs.
+
+![Bitcoin rolling-average analysis](outputs/rolling_average_analysis.png)
+
+#### Return and volatility analysis
+
+Daily returns and rolling volatility illustrate why cryptocurrency forecasting is difficult and why
+forecast uncertainty can change significantly across market regimes.
+
+![Bitcoin return and volatility analysis](outputs/volatility_analysis.png)
+
+#### Actual versus predicted closing price
+
+This plot compares observed Bitcoin closing prices with one-step LSTM predictions. Closer alignment
+between the two series indicates stronger price-level forecasting accuracy.
+
+![Actual versus predicted Bitcoin closing price](outputs/actual_vs_predicted.png)
 
 #### Residual analysis
 
-![Bitcoin residual analysis](outputs/residual_plot.png)
+Residuals help reveal systematic underprediction, overprediction, changing error variance, and
+periods where the model does not fully capture sharp market movements.
+
+![Bitcoin forecast residual analysis](outputs/residual_plot.png)
 
 #### Baseline comparison
 
-![Bitcoin baseline comparison](outputs/baseline_comparison.png)
+The LSTM is compared with transparent persistence, moving-average, and linear-trend baselines. This
+comparison is essential because adjacent Bitcoin closing prices are highly persistent, and a complex
+model should not be judged without simple alternatives.
+
+![Bitcoin LSTM baseline comparison](outputs/baseline_comparison.png)
 
 #### Training and validation loss
 
-![Bitcoin LSTM training curve](outputs/training_curve.png)
+The training-history chart compares training and validation loss across epochs to help assess
+convergence and possible overfitting.
 
-#### Recursive forecast
+![Bitcoin LSTM training and validation loss](outputs/training_curve.png)
 
-![Bitcoin future forecast](outputs/forecast_plot.png)
+#### Recursive forecast artifact
+
+The saved recursive forecast chart presents recent historical prices together with the packaged
+multi-day forecast output.
+
+![Bitcoin recursive future forecast](outputs/forecast_plot.png)
 
 ---
 
@@ -300,6 +342,9 @@ The app supports:
 
 The deployed application loads pretrained artifacts and does not retrain during startup.
 
+**Live application:**  
+[Open the Bitcoin Price Prediction application](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)
+
 ---
 
 ## Project Structure
@@ -319,7 +364,10 @@ lstm-projects/
     │   ├── bitcoin_price_sample.csv
     │   └── README_data.md
     ├── images/
-    │   └── README.md
+    │   ├── 01_app_overview.png
+    │   ├── 02_price_trend_and_volatility.png
+    │   ├── 03_future_bitcoin_forecast.png
+    │   └── 04_model_performance.png
     ├── models/
     │   ├── bitcoin_lstm_model.keras
     │   ├── bitcoin_lstm_weights.npz
@@ -436,18 +484,37 @@ The cleaned pipeline:
 
 ## Deployment
 
-Streamlit Community Cloud is recommended.
+The application is deployed on Streamlit Community Cloud and connected directly to the `main`
+branch of this GitHub repository.
 
-Use:
+**Live application:**  
+[Open the Bitcoin Price Prediction application](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)
+
+**Streamlit entry point:**
+
+```text
+02-bitcoin-price-prediction/app/streamlit_app.py
+```
+
+**Cloud dependency file:**
+
+```text
+02-bitcoin-price-prediction/app/requirements.txt
+```
+
+**Deployment configuration:**
 
 ```text
 Repository: unit-mole/lstm-projects
 Branch: main
-Main file path: 02-bitcoin-price-prediction/app/streamlit_app.py
 Python version: 3.12
 ```
 
-See [`README_HOSTING.md`](README_HOSTING.md) for the complete setup.
+Changes pushed to the relevant Project 02 files on the `main` branch automatically trigger a
+Streamlit application update.
+
+See [`README_HOSTING.md`](README_HOSTING.md) for the complete deployment configuration,
+maintenance instructions, and troubleshooting guidance.
 
 ---
 
@@ -506,6 +573,10 @@ See [`README_HOSTING.md`](README_HOSTING.md) for the complete setup.
 ---
 
 ## Portfolio Description
+
+**Live demonstration**
+
+[Open the deployed Streamlit application](https://lstm-projects-k2ocmukxfs83e9ntudpdgr.streamlit.app/)
 
 **One-line description**
 

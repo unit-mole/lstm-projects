@@ -1,0 +1,7 @@
+"""Convenience wrapper for the optional TensorFlow training pipeline."""
+
+from src.model_training import main
+
+
+if __name__ == "__main__":
+    main()

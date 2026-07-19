@@ -1,0 +1,75 @@
+{
+  "project": "Traffic Flow Prediction using Stacked LSTM",
+  "project_folder": "10-traffic-flow-prediction-stacked-lstm",
+  "model_type": "Deep Stacked LSTM regression model",
+  "framework": "Keras / TensorFlow artifact with portable NumPy inference",
+  "timestamp_column": "timestamp",
+  "target_column": "congestion_index",
+  "feature_columns": [
+    "congestion_index",
+    "vehicle_count",
+    "avg_speed",
+    "occupancy",
+    "weather_severity",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "weekend"
+  ],
+  "input_sequence_length": 24,
+  "forecast_horizon": 1,
+  "input_shape": [
+    24,
+    10
+  ],
+  "architecture": [
+    "LSTM(64, return_sequences=True)",
+    "Dropout(0.20)",
+    "LSTM(32, return_sequences=True)",
+    "Dropout(0.20)",
+    "LSTM(16)",
+    "Dense(16, activation='relu')",
+    "Dense(1, activation='linear')"
+  ],
+  "parameter_count": 35041,
+  "loss": "mean squared error",
+  "optimizer": "Adam(learning_rate=0.001)",
+  "training_rows": 6132,
+  "validation_rows": 1314,
+  "test_rows": 1314,
+  "training_date_range": [
+    "2023-01-01 00:00:00",
+    "2023-09-13 11:00:00"
+  ],
+  "validation_date_range": [
+    "2023-09-13 12:00:00",
+    "2023-11-07 05:00:00"
+  ],
+  "test_date_range": [
+    "2023-11-07 06:00:00",
+    "2023-12-31 23:00:00"
+  ],
+  "validation_metrics": {
+    "mae": 2.7322426530827455,
+    "rmse": 3.4389905024159058,
+    "r2": 0.9493119604090813
+  },
+  "test_metrics": {
+    "mae": 2.691659450531006,
+    "rmse": 3.379029164807349,
+    "mape_pct": 7.003808975219727,
+    "r2": 0.9508787989616394
+  },
+  "persistence_baseline_test_metrics": {
+    "mae": 7.596779823303223,
+    "rmse": 9.183809330599193,
+    "mape_pct": 18.220396041870117,
+    "r2": 0.637147068977356
+  },
+  "model_sha256": "2f205cea1b159a254654f3f02a53701be09d3f52fea171203b6bb8d62e3e1287",
+  "scaler_sha256": "35fd02975adca6b539908c2fb07019730f86c08f8047125120c7f497c04ca92e",
+  "seed": 42,
+  "data_source": "Deterministic synthetic hourly traffic dataset reproduced from the supplied notebook.",
+  "responsible_use": "Educational portfolio demonstration only; not validated for traffic control, public safety, emergency response, or transportation policy."
+}

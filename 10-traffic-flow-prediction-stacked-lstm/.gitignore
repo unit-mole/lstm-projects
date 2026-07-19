@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Generated or private data
+data/private/
+data/raw/
+*.parquet
+*.feather
+
+# Training checkpoints and logs
+models/checkpoints/
+outputs/logs/
+*.h5
+*.ckpt
+
+# Keep the packaged Keras model
+!models/stacked_lstm_traffic.keras

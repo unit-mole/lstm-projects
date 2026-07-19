@@ -1,0 +1,71 @@
+name: 10 - Traffic Flow Prediction Stacked LSTM CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "10-traffic-flow-prediction-stacked-lstm/**"
+      - ".github/workflows/10-traffic-flow-prediction-stacked-lstm.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "10-traffic-flow-prediction-stacked-lstm/**"
+      - ".github/workflows/10-traffic-flow-prediction-stacked-lstm.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-test-and-validate:
+    name: Lint, test, and validate artifacts
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 10-traffic-flow-prediction-stacked-lstm
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            10-traffic-flow-prediction-stacked-lstm/app/requirements.txt
+            10-traffic-flow-prediction-stacked-lstm/requirements.txt
+
+      - name: Install CI dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r app/requirements.txt
+          python -m pip install pytest ruff
+
+      - name: Validate required project files
+        run: |
+          test -f README.md
+          test -f app/streamlit_app.py
+          test -f app/requirements.txt
+          test -f data/sample_traffic_flow_data.csv
+          test -f models/stacked_lstm_traffic.keras
+          test -f models/scalers.json
+          test -f models/model_metadata.json
+          test -f train_model.py
+
+      - name: Compile Python source files
+        run: |
+          python -m compileall app scripts src tests train_model.py
+
+      - name: Run Ruff checks
+        run: |
+          ruff check app scripts src tests train_model.py
+
+      - name: Run automated tests
+        run: |
+          python -m pytest -q
+
+      - name: Validate packaged model artifacts
+        run: |
+          python scripts/validate_model_artifacts.py

@@ -1,15 +1,10 @@
 # Video Frame Prediction using Convolutional LSTM
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-
 [![Keras](https://img.shields.io/badge/Keras-3.13-D00000.svg)](https://keras.io/)
-
 [![JAX](https://img.shields.io/badge/JAX-CPU-orange.svg)](https://docs.jax.dev/)
-
 [![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-efpoyil7h98xqzmxe9r9pt.streamlit.app/)
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
 [![Video Frame Prediction ConvLSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/09-video-frame-prediction-convlstm.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/09-video-frame-prediction-convlstm.yml)
 
 An end-to-end computer-vision and spatiotemporal forecasting project that uses a

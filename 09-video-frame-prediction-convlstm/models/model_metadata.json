@@ -1,0 +1,72 @@
+{
+  "project_name": "Video Frame Prediction using Convolutional LSTM",
+  "project_folder": "09-video-frame-prediction-convlstm",
+  "task": "single-step next-frame prediction with optional recursive multi-step inference",
+  "input_frames": 6,
+  "forecast_horizon": 1,
+  "height": 32,
+  "width": 32,
+  "channels": 1,
+  "color_mode": "grayscale",
+  "normalization": "pixel values scaled to [0, 1]",
+  "dtype": "float32",
+  "dataset": {
+    "type": "synthetic moving-object sequences",
+    "samples": 2500,
+    "object": "5x5 white square",
+    "motion": "constant velocity with boundary reflection",
+    "seed": 42,
+    "split": {
+      "train": 1750,
+      "validation": 375,
+      "test": 375
+    }
+  },
+  "model": {
+    "framework": "Keras 3",
+    "architecture": [
+      "ConvLSTM2D(32, 3x3, return_sequences=True)",
+      "BatchNormalization",
+      "ConvLSTM2D(32, 3x3)",
+      "BatchNormalization",
+      "Conv2D(16, 3x3, ReLU)",
+      "Conv2D(1, 3x3, sigmoid)"
+    ],
+    "parameters": 117025,
+    "loss": "mean_squared_error",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "training_epochs": 15,
+    "batch_size": 32
+  },
+  "metrics": {
+    "convlstm": {
+      "mse": 0.002021142980083823,
+      "mae": 0.01338266208767891,
+      "rmse": 0.044957123796833615,
+      "ssim": 0.5463526910626487,
+      "psnr_db": 31.29841157605699,
+      "iou": 0.9195999503135681,
+      "pixel_accuracy": 0.9978958333333333
+    },
+    "persistence_last_frame": {
+      "mse": 0.023895833641290665,
+      "mae": 0.023895833641290665,
+      "rmse": 0.15458277278303253,
+      "ssim": 0.8782036639771588,
+      "psnr_db": 16.35121668414755,
+      "iou": 0.35077157616615295,
+      "pixel_accuracy": 0.9761041666666667
+    },
+    "frame_average": {
+      "mse": 0.026641346514225006,
+      "mae": 0.04223784804344177,
+      "rmse": 0.16322177095664966,
+      "ssim": 0.7108872274654098,
+      "psnr_db": 15.764641467264601,
+      "iou": 0.0380702018737793,
+      "pixel_accuracy": 0.9645572916666667
+    }
+  },
+  "responsible_use": "Educational portfolio demo only. Do not use for surveillance, safety-critical, medical, autonomous-driving, legal, or production monitoring decisions without validation."
+}

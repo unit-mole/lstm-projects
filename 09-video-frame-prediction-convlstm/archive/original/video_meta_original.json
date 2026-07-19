@@ -1,0 +1,7 @@
+{
+    "input_frames": 6,
+    "height": 32,
+    "width": 32,
+    "channels": 1,
+    "seed": 42
+}

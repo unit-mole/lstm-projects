@@ -1,0 +1,90 @@
+name: 09 - Video Frame Prediction ConvLSTM CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "09-video-frame-prediction-convlstm/**"
+      - ".github/workflows/09-video-frame-prediction-convlstm.yml"
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - "09-video-frame-prediction-convlstm/**"
+      - ".github/workflows/09-video-frame-prediction-convlstm.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: video-frame-prediction-convlstm-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-test-and-smoke-test:
+    name: Validate, test, and smoke-test model
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: 09-video-frame-prediction-convlstm
+
+    env:
+      KERAS_BACKEND: jax
+      PYTHONPATH: ${{ github.workspace }}/09-video-frame-prediction-convlstm
+      XLA_PYTHON_CLIENT_PREALLOCATE: "false"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: 09-video-frame-prediction-convlstm/requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Compile Python source
+        run: python -m compileall app src scripts tests train_model.py
+
+      - name: Validate required project artifacts
+        run: python scripts/validate_project.py
+
+      - name: Run automated tests
+        run: python -m pytest -q
+
+      - name: Run saved-model inference smoke test
+        run: |
+          python - <<'PY'
+          import numpy as np
+
+          from src.config import MODEL_PATH, SAMPLE_DATA_PATH
+          from src.data_preprocessing import load_sample_sequences
+          from src.prediction_pipeline import batch_predict, load_prediction_model
+
+          samples = load_sample_sequences(SAMPLE_DATA_PATH)
+          input_batch = samples["X"][:1]
+
+          model = load_prediction_model(MODEL_PATH)
+          prediction = batch_predict(model, input_batch)
+
+          expected_shape = (1, 32, 32, 1)
+          assert prediction.shape == expected_shape, (
+              f"Unexpected prediction shape: {prediction.shape}; expected {expected_shape}."
+          )
+          assert np.isfinite(prediction).all(), "Prediction contains NaN or infinite values."
+
+          print(f"Saved-model smoke test passed with output shape {prediction.shape}.")
+          PY

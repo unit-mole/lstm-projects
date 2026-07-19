@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Large or private data
+/data/raw/
+/data/private/
+/data/uploads/
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Generated training checkpoints; keep the final lightweight demo model
+/models/checkpoints/
+/models/*.weights.h5
+
+# Local outputs not intended for Git
+/outputs/runtime/

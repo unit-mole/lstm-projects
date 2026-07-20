@@ -2,16 +2,18 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Keras](https://img.shields.io/badge/Keras-3.13.2-D00000.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployment%20Ready-red.svg)](README_HOSTING.md)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Text Summarization CI](https://github.com/unit-mole/lstm-projects/actions/workflows/12-text-summarization-seq2seq-attention.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/12-text-summarization-seq2seq-attention.yml)
 
 An end-to-end abstractive text-summarization project that uses an Encoder-Decoder LSTM with additive attention to transform a longer input passage into a concise generated summary. The project includes deterministic data reconstruction, portable tokenizer artifacts, greedy and beam-search inference, ROUGE evaluation, extractive baselines, attention visualization, batch CSV processing, tests, GitHub Actions, and a deployment-ready Streamlit application.
 
-**Status:** Portfolio-ready and deployment-ready  
-**Live demo:** Deployment pending — follow [`README_HOSTING.md`](README_HOSTING.md)  
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](README_HOSTING.md)  
+**Status:** Portfolio-ready  
+**Live demo:** [Open the Streamlit application](https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/)  
 **Primary stack:** Python · Keras · JAX · LSTM · Additive Attention · ROUGE · Streamlit
+
+**Application:** https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/
 
 ---
 
@@ -388,13 +390,30 @@ The Streamlit application supports:
 - Downloadable summarized CSV
 - Model details, limitations, and responsible-use guidance
 
-### Model Output Preview
+### Application Overview
 
-`images/demo_screenshot.png` was generated from the verified model artifacts. After deployment, replace or supplement it with actual Streamlit screenshots.
+The main application view presents the project purpose, responsible-use guidance,
+verified model configuration, decoding controls, and recruiter-friendly sample
+workflow.
 
-![Seq2Seq summarization model-output preview](images/demo_screenshot.png)
+![Text Summarization Streamlit application overview](images/01_app_overview.png)
 
-Recommended deployed screenshots are documented in [`images/README.md`](images/README.md).
+### Generated Summary Results
+
+The sample workflow displays the input article, generated summary, reference
+summary, compression information, vocabulary diagnostics, and ROUGE evaluation
+for labeled examples.
+
+![Generated summary and evaluation results](images/02_generated_summary_results.png)
+
+### Attention Visualization
+
+For greedy decoding, the application can display an additive-attention heatmap
+showing the alignment between generated summary tokens and cleaned input tokens.
+Attention weights support model inspection but should not be interpreted as
+causal explanations or proof of factual reasoning.
+
+![Seq2Seq additive-attention visualization](images/03_attention_visualization.png)
 
 ## Model Artifacts
 
@@ -488,7 +507,17 @@ Retraining saves separate artifacts under `models/retrained/` so the supplied ve
 
 ## Deploy
 
-Recommended Streamlit Community Cloud configuration:
+The application is deployed through Streamlit Community Cloud from the public
+LSTM portfolio repository.
+
+- **Repository:** `unit-mole/lstm-projects`
+- **Branch:** `main`
+- **Entrypoint:** `12-text-summarization-seq2seq-attention/app/streamlit_app.py`
+- **Python:** `3.12`
+- **Live application:**  
+  https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/
+
+Deployment configuration:
 
 ```text
 Repository: unit-mole/lstm-projects
@@ -530,6 +559,9 @@ lstm-projects/
     │   ├── sample_batch.csv
     │   └── synthetic_dataset_sample.csv
     ├── images/
+    │   ├── 01_app_overview.png
+    │   ├── 02_generated_summary_results.png
+    │   ├── 03_attention_visualization.png
     │   ├── README.md
     │   └── demo_screenshot.png
     ├── models/

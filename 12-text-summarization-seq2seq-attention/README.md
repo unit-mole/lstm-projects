@@ -13,7 +13,6 @@ An end-to-end abstractive text-summarization project that uses an Encoder-Decode
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/)  
 **Primary stack:** Python · Keras · JAX · LSTM · Additive Attention · ROUGE · Streamlit
 
-**Application:** https://lstm-projects-8ebpgk2kvotr6yjrgguexw.streamlit.app/
 
 ---
 

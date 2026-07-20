@@ -1,8 +1,8 @@
 # Traffic Flow Prediction using Stacked LSTM
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
-[![Keras](https://img.shields.io/badge/Keras-Stacked%20LSTM-red.svg)](https://keras.io/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Deployment%20Ready-FF4B4B.svg)](README_HOSTING.md)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange.svg)](https://www.tensorflow.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-red.svg)](https://lstm-projects-gutyrjww4ouvee3rfurrnu.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Traffic Flow Stacked LSTM CI](https://github.com/unit-mole/lstm-projects/actions/workflows/10-traffic-flow-prediction-stacked-lstm.yml/badge.svg)](https://github.com/unit-mole/lstm-projects/actions/workflows/10-traffic-flow-prediction-stacked-lstm.yml)
 
@@ -14,9 +14,10 @@ generation, persistence-baseline comparison, residual analysis, packaged
 Keras artifacts, portable NumPy inference, and a Streamlit forecasting
 application.
 
-**Status:** Portfolio-ready and deployment-ready  
-**Live demo:** Add the Streamlit Community Cloud URL after deployment  
-**Primary stack:** Python · Keras · TensorFlow · NumPy · pandas · scikit-learn · Streamlit
+**Status:** Portfolio-ready  
+**Live demo:** [Open the Streamlit application](https://lstm-projects-gutyrjww4ouvee3rfurrnu.streamlit.app/)  
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstm-projects-gutyrjww4ouvee3rfurrnu.streamlit.app/)  
+**Primary stack:** Python · Keras · TensorFlow · NumPy · pandas · scikit-learn · Plotly · Streamlit
 
 ---
 
@@ -298,34 +299,43 @@ monitoring, incident data, and business-cost-based evaluation.
 
 ## Streamlit Demo
 
-The application supports:
+The deployed application supports:
 
-- Safe preloaded sample data
+- Safe preloaded synthetic traffic data
 - Compatible traffic CSV upload
 - Data preview and missing-value summary
-- Traffic, speed, occupancy, weather, and volume trends
-- Hourly and weekly pattern analysis
+- Congestion, vehicle-count, speed, occupancy, and weather trends
+- Hourly and day-of-week traffic-pattern analysis
 - Artifact-backed one-step backtesting
-- MAE, RMSE, MAPE, and R² cards
+- MAE, RMSE, MAPE, and R² metric cards
 - Persistence-baseline comparison
 - Actual-versus-predicted and residual charts
-- 1–24 hour recursive scenario forecast
-- Traffic-band interpretation
-- Downloadable prediction and forecast CSV files
+- 1–24 hour recursive traffic scenario forecasting
+- Traffic-band and expected-peak interpretation
+- Downloadable backtest and future-forecast CSV files
 
-### Recommended screenshots after deployment
+### Application Overview
 
-Save the essential application captures in `images/` as:
+The application overview introduces the forecasting objective, responsible-use
+boundary, selected data source, dataset coverage, and high-level traffic
+summary metrics.
 
-```text
-01-application-overview.png
-02-traffic-patterns-dashboard.png
-03-forecast-results.png
-04-backtest-model-performance.png
-```
+![Traffic Flow Prediction Streamlit application overview](images/01-application-overview.png)
 
-After adding screenshots, include them in this section using relative image
-paths.
+### Traffic Patterns Dashboard
+
+The traffic-pattern dashboard presents historical congestion trends, recurring
+hourly peaks, and weekday-versus-weekend traffic behavior.
+
+![Traffic patterns dashboard](images/02-traffic-patterns-dashboard.png)
+
+### Traffic Forecast Results
+
+The forecast view presents the next-step congestion estimate, highest forecast,
+expected peak period, historical-versus-forecast chart, traffic-band
+interpretation, and downloadable forecast table.
+
+![Traffic forecast results](images/03-traffic-forecast-results.png)
 
 ## Model Artifacts
 
@@ -418,6 +428,8 @@ Recommended hosting: **Streamlit Community Cloud**
 - **Entrypoint:** `10-traffic-flow-prediction-stacked-lstm/app/streamlit_app.py`
 - **Python:** `3.11`
 - **Dependency file:** `10-traffic-flow-prediction-stacked-lstm/app/requirements.txt`
+- **Live application:**  
+  https://lstm-projects-gutyrjww4ouvee3rfurrnu.streamlit.app/
 
 The app loads pretrained artifacts and does not retrain during startup.
 
@@ -442,6 +454,9 @@ lstm-projects/
 │   │   ├── README_data.md
 │   │   └── sample_traffic_flow_data.csv
 │   ├── images/
+│   │   ├── 01-application-overview.png
+│   │   ├── 02-traffic-patterns-dashboard.png
+│   │   └── 03-traffic-forecast-results.png
 │   ├── models/
 │   │   ├── model_metadata.json
 │   │   ├── scalers.json

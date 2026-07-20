@@ -13,7 +13,7 @@ from typing import Iterable
 import keras
 import numpy as np
 
-from .attention_layer import build_attention_scoring_decoder
+from .attention_layer import decoder_step_with_attention
 from .config import (
     DECODER_MODEL_PATH,
     ENCODER_MODEL_PATH,
@@ -87,17 +87,6 @@ class Summarizer:
         self.latent_dimension = int(architecture["latent_dimension"])
         self.start_id = self.target_tokenizer.word_index[START_TOKEN]
         self.end_id = self.target_tokenizer.word_index[END_TOKEN]
-        self._attention_decoder: keras.Model | None = None
-
-    @property
-    def attention_decoder(self) -> keras.Model:
-        if self._attention_decoder is None:
-            self._attention_decoder = build_attention_scoring_decoder(
-                self.decoder_model,
-                max_source_length=self.max_source_length,
-                latent_dimension=self.latent_dimension,
-            )
-        return self._attention_decoder
 
     def _prepare_encoder_input(self, text: str) -> tuple[str, np.ndarray, float, bool, list[str]]:
         validation = validate_input_text(text, min_words=MIN_INPUT_WORDS)
@@ -114,35 +103,56 @@ class Summarizer:
         self,
         encoder_input: np.ndarray,
         capture_attention: bool,
-    ) -> tuple[list[int], np.ndarray | None]:
+    ) -> tuple[list[int], np.ndarray | None, str]:
         encoder_outputs, state_h, state_c = self.encoder_model.predict(
             encoder_input, verbose=0
         )
         current_token = np.array([[self.start_id]], dtype="int32")
         generated_ids: list[int] = []
         attention_rows: list[np.ndarray] = []
+        attention_warning = ""
+        attention_enabled = capture_attention
 
         for _ in range(self.max_target_length - 1):
-            if capture_attention:
-                probabilities, state_h, state_c, scores = self.attention_decoder.predict(
-                    [current_token, encoder_outputs, state_h, state_c], verbose=0
-                )
+            scores = None
+            if attention_enabled:
+                try:
+                    probabilities, state_h, state_c, scores = decoder_step_with_attention(
+                        self.decoder_model,
+                        current_token,
+                        encoder_outputs,
+                        state_h,
+                        state_c,
+                    )
+                except Exception:
+                    # Summary generation must remain available even if an optional
+                    # attention visualization cannot be produced on a host backend.
+                    attention_enabled = False
+                    attention_rows.clear()
+                    attention_warning = (
+                        "The summary was generated successfully, but attention "
+                        "visualization is unavailable in this runtime."
+                    )
+                    probabilities, state_h, state_c = self.decoder_model.predict(
+                        [current_token, encoder_outputs, state_h, state_c], verbose=0
+                    )
             else:
                 probabilities, state_h, state_c = self.decoder_model.predict(
                     [current_token, encoder_outputs, state_h, state_c], verbose=0
                 )
-                scores = None
 
-            sampled_id = int(np.argmax(probabilities[0, -1, :]))
+            sampled_id = int(np.argmax(np.asarray(probabilities)[0, -1, :]))
             if sampled_id in (0, self.end_id):
                 break
             generated_ids.append(sampled_id)
             if scores is not None:
-                attention_rows.append(np.asarray(scores[0, 0, :], dtype=float))
+                attention_rows.append(
+                    np.asarray(scores[0, 0, :], dtype=float)
+                )
             current_token = np.array([[sampled_id]], dtype="int32")
 
         matrix = np.asarray(attention_rows) if attention_rows else None
-        return generated_ids, matrix
+        return generated_ids, matrix, attention_warning
 
     def _beam_search_decode(
         self,
@@ -210,8 +220,9 @@ class Summarizer:
         cleaned, encoder_input, oov_ratio, truncated, source_tokens = self._prepare_encoder_input(text)
         method = decoding_method.lower().strip()
         attention_matrix: np.ndarray | None = None
+        attention_warning = ""
         if method == "greedy":
-            generated_ids, attention_matrix = self._greedy_decode(
+            generated_ids, attention_matrix, attention_warning = self._greedy_decode(
                 encoder_input, capture_attention=include_attention
             )
         elif method in {"beam", "beam search", "beam_search"}:
@@ -234,6 +245,8 @@ class Summarizer:
         summary_words = len(summary.split())
         compression = summary_words / input_words if input_words else 0.0
         warning_parts = []
+        if attention_warning:
+            warning_parts.append(attention_warning)
         if truncated:
             warning_parts.append(
                 f"Only the first {self.max_source_length} cleaned tokens were used."
